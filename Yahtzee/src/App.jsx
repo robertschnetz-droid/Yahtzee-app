@@ -69,7 +69,6 @@ const nummer = Number(value);
 
 if (
   value !== "" &&
-  value.length >= 2 &&
   (
     nummer > maxWaarden[r] ||
     nummer % (r + 1) !== 0
