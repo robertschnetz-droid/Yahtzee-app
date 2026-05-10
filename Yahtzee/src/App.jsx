@@ -263,36 +263,8 @@ const totaalOnder = (k) => scoresOnder.reduce((s, r) => s + (Number(r[k]) || 0),
     </option>
   ))}
 </select>
-
-  const bovenCompleet =
-    scoresBoven.every(rij => rij[k] !== "");
-
-  if (bovenCompleet && totaal(k) < 63 && !sadPlayed) {
-    sadTrombone.currentTime = 0;
-    sadTrombone.play();
-    setSadPlayed(true);
-  }
-  if (
-e.key === "Enter" &&
-totaal(k) >= 63 &&
-!bonusBehaald[k]
-) {
-  bonusGeluid.currentTime = 0;
-  bonusGeluid.play();
-  setBonusBehaald(prev => {
-const nieuw = [...prev];
-nieuw[k] = true;
-return nieuw;
-});
-
-}
-}
-}}
-                    />
-                  </td>
-                ))}
-              </tr>
-            ))}
+</td>
+))}
 
             <tr className="total">
               <td>Totaal</td>
