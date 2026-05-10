@@ -1,17 +1,14 @@
 import { useState, useEffect } from "react";
+
 const plingGeluid = new Audio("/sounds/Pling.mp3");
 const bonusGeluid = new Audio("/sounds/Bonus.mp3");
 const aaahhhGeluid = new Audio("/sounds/Aaahhh.mp3");
 const yahtzeeGeluid = new Audio("/sounds/Yahtzee.mp3");
 const startupGeluid = new Audio("/sounds/Startup.mp3");
 const sadTrombone = new Audio("/sounds/sadtrombone.mp3");
-function App() {
-    const [bonusBehaald, setBonusBehaald] = useState(
-  [false, false, false, false, false, false]
-);
-  const [sadPlayed, setSadPlayed] = useState(false);
-  const spellen = [1, 2, 3, 4, 5, 6];
 
+function App() {
+  const spellen = [1, 2, 3, 4, 5, 6];
   const boven = ["Enen", "Tweeën", "Drieën", "Vieren", "Vijven", "Zessen"];
 
   const onder = [
@@ -25,14 +22,17 @@ function App() {
     { naam: "Yahtzee bonus", vast: 100 },
   ];
 
+  const [bonusBehaald, setBonusBehaald] = useState([false, false, false, false, false, false]);
+  const [sadPlayed, setSadPlayed] = useState([false, false, false, false, false, false]);
+
   const [scoresBoven, setScoresBoven] = useState(() => {
     const data = localStorage.getItem("scoresBoven");
-    return data ? JSON.parse(data) : boven.map(() => spellen.map(() => 0));
+    return data ? JSON.parse(data) : boven.map(() => spellen.map(() => ""));
   });
 
   const [scoresOnder, setScoresOnder] = useState(() => {
     const data = localStorage.getItem("scoresOnder");
-    return data ? JSON.parse(data) : onder.map(() => spellen.map(() => 0));
+    return data ? JSON.parse(data) : onder.map(() => spellen.map(() => ""));
   });
 
   const [naam, setNaam] = useState(() => localStorage.getItem("naam") || "");
@@ -48,83 +48,99 @@ function App() {
   useEffect(() => {
     localStorage.setItem("naam", naam);
   }, [naam]);
-useEffect(() => {
+
+  useEffect(() => {
     startupGeluid.currentTime = 0;
     startupGeluid.play();
-}, []);
+  }, []);
+
+  const totaal = (k) =>
+    scoresBoven.reduce((s, r) => s + (Number(r[k]) || 0), 0);
+
+  const bonus = (k) => (totaal(k) >= 63 ? 35 : 0);
+  const totaalBoven = (k) => totaal(k) + bonus(k);
+  const totaalOnder = (k) =>
+    scoresOnder.reduce((s, r) => s + (Number(r[k]) || 0), 0);
+  const eind = (k) => totaalBoven(k) + totaalOnder(k);
+  const grand = () => spellen.reduce((s, _, k) => s + eind(k), 0);
+
+  const bonusNogNodig = (kolom) => {
+    const bovenCompleet = scoresBoven.every((rij) => rij[kolom] !== "");
+    const nodig = 63 - totaal(kolom);
+
+    if (bonusBehaald[kolom] || totaal(kolom) >= 63) return "🎉";
+    if (bovenCompleet) return "❌";
+    return nodig < 0 ? 0 : nodig;
+  };
+
   function nieuwSpel() {
     if (!window.confirm("Nieuw spel starten?")) return;
+
     plingGeluid.currentTime = 0;
-plingGeluid.play();
-    setScoresBoven(boven.map(() => spellen.map(() => "" )));
-    setScoresOnder(onder.map(() => spellen.map(() => "" )));
-    setSadPlayed(false);
+    plingGeluid.play();
+
+    setScoresBoven(boven.map(() => spellen.map(() => "")));
+    setScoresOnder(onder.map(() => spellen.map(() => "")));
+    setBonusBehaald([false, false, false, false, false, false]);
+    setSadPlayed([false, false, false, false, false, false]);
   }
 
   function setBoven(r, k, v) {
-  const value = v.replace(/[^0-9]/g, "");
-  const maxWaarden = [5, 10, 15, 20, 25, 30];
+    const waarde = v === "" ? "" : Number(v);
+    const kopie = scoresBoven.map((x) => [...x]);
 
-const nummer = Number(value);
+    kopie[r][k] = waarde;
+    setScoresBoven(kopie);
 
-if (
-  value !== "" &&
-  value.length >= 2 &&
-  (
-    nummer > maxWaarden[r] ||
-    nummer % (r + 1) !== 0
-  )
-) {
-  return;
-}
+    if (waarde === 0) {
+      aaahhhGeluid.currentTime = 0;
+      aaahhhGeluid.play();
+    }
 
-const kopie = scoresBoven.map((x) => [...x]);
+    const nieuwTotaal = kopie.reduce((s, rij) => s + (Number(rij[k]) || 0), 0);
+    const bovenCompleet = kopie.every((rij) => rij[k] !== "");
 
-kopie[r][k] = value === "" ? "" : Number(value);
-if (value === "0") {
-  aaahhhGeluid.currentTime = 0;
-  aaahhhGeluid.play();
-}
-const oudeTotaal = totaal(k);
-const nieuweTotaal =
-  kopie.reduce((s, r) => s + (Number(r[k]) || 0), 0);
+    if (nieuwTotaal >= 63 && !bonusBehaald[k]) {
+      bonusGeluid.currentTime = 0;
+      bonusGeluid.play();
 
-  setScoresBoven(kopie);
-}
+      setBonusBehaald((prev) => {
+        const nieuw = [...prev];
+        nieuw[k] = true;
+        return nieuw;
+      });
+    }
 
- function setOnder(r, k, v) {
+    if (bovenCompleet && nieuwTotaal < 63 && !sadPlayed[k]) {
+      sadTrombone.currentTime = 0;
+      sadTrombone.play();
+
+      setSadPlayed((prev) => {
+        const nieuw = [...prev];
+        nieuw[k] = true;
+        return nieuw;
+      });
+    }
+  }
+
+  function setOnder(r, k, v) {
     const value = v.replace(/[^0-9]/g, "");
     const kopie = scoresOnder.map((x) => [...x]);
 
     kopie[r][k] = value === "" ? "" : Number(value);
 
     if (Number(value) === 0 && value !== "") {
-        aaahhhGeluid.currentTime = 0;
-        aaahhhGeluid.play();
+      aaahhhGeluid.currentTime = 0;
+      aaahhhGeluid.play();
     }
 
     if ((r === 5 || r === 7) && Number(value) > 0) {
-        yahtzeeGeluid.currentTime = 0;
-        yahtzeeGeluid.play();
+      yahtzeeGeluid.currentTime = 0;
+      yahtzeeGeluid.play();
     }
 
     setScoresOnder(kopie);
-}
-
-  const totaal = (k) => scoresBoven.reduce((s, r) => s + (Number(r[k]) || 0), 0);
-  const bonus = (k) => (totaal(k) >= 63 ? 35 : 0);
-  const totaalBoven = (k) => totaal(k) + bonus(k);
-const bonusNogNodig = (kolom) => {
-  const bovenCompleet = scoresBoven.every(rij => rij[kolom] !== "");
-  const nodig = 63 - totaal(kolom);
-
-if (bonusBehaald[kolom]) return "🎉";
-if (bovenCompleet) return "❌";
-return nodig < 0 ? 0 : nodig;
-};
-const totaalOnder = (k) => scoresOnder.reduce((s, r) => s + (Number(r[k]) || 0), 0);
-  const eind = (k) => totaalBoven(k) + totaalOnder(k);
-  const grand = () => spellen.reduce((s, _, k) => s + eind(k), 0);
+  }
 
   return (
     <div className="app">
@@ -172,6 +188,7 @@ const totaalOnder = (k) => scoresOnder.reduce((s, r) => s + (Number(r[k]) || 0),
         }
 
         input { width: 50px; }
+        select { width: 58px; }
         .nameInput { width: 160px; }
 
         .tableWrap {
@@ -236,7 +253,9 @@ const totaalOnder = (k) => scoresOnder.reduce((s, r) => s + (Number(r[k]) || 0),
           <thead>
             <tr>
               <th>Categorie</th>
-              {spellen.map((s) => <th key={s}>Spel {s}</th>)}
+              {spellen.map((s) => (
+                <th key={s}>Spel {s}</th>
+              ))}
             </tr>
           </thead>
 
@@ -244,66 +263,79 @@ const totaalOnder = (k) => scoresOnder.reduce((s, r) => s + (Number(r[k]) || 0),
             {boven.map((cat, i) => (
               <tr key={cat}>
                 <td>{cat}</td>
+
                 {spellen.map((_, k) => (
                   <td key={k}>
+                    <select
+                      value={scoresBoven[i][k]}
+                      onChange={(e) => setBoven(i, k, e.target.value)}
+                    >
+                      <option value="">-</option>
+                      <option value="0">0</option>
 
-<select
-  value={scoresBoven[i][k]}
-  onChange={(e) => setBoven(i, k, e.target.value)}
->
-  <option value="">-</option>
-  <option value="0">0</option>
-
-  {Array.from(
-    { length: 5 },
-    (_, n) => (n + 1) * (i + 1)
-  ).map((waarde) => (
-    <option key={waarde} value={waarde}>
-      {waarde}
-    </option>
-  ))}
-</select>
-</td>
-))}
+                      {Array.from({ length: 5 }, (_, n) => (n + 1) * (i + 1)).map(
+                        (waarde) => (
+                          <option key={waarde} value={waarde}>
+                            {waarde}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  </td>
+                ))}
+              </tr>
+            ))}
 
             <tr className="total">
               <td>Totaal</td>
-              {spellen.map((_, k) => <td key={k}>{totaal(k)}</td>)}
+              {spellen.map((_, k) => (
+                <td key={k}>{totaal(k)}</td>
+              ))}
             </tr>
 
-<tr className="total">
-  <td>Punten tot bonus</td>
-  {spellen.map((_, k) => (
-    <td
-  key={k}
-  style={{
-    color: totaal(k) >= 63 ? "lightgreen" : "red",
-    fontWeight: "bold"
-  }}>
-  {bonusNogNodig(k)}
-</td>
-  ))}
-</tr>
+            <tr className="total">
+              <td>Punten tot bonus</td>
+              {spellen.map((_, k) => (
+                <td
+                  key={k}
+                  style={{
+                    color: totaal(k) >= 63 ? "lightgreen" : "red",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {bonusNogNodig(k)}
+                </td>
+              ))}
+            </tr>
+
             <tr>
               <td><b>Bonus</b></td>
-              {spellen.map((_, k) => <td key={k}>{bonus(k)}</td>)}
+              {spellen.map((_, k) => (
+                <td key={k}>{bonus(k)}</td>
+              ))}
             </tr>
 
             <tr className="total">
               <td>Totaal boven</td>
-              {spellen.map((_, k) => <td key={k}>{totaalBoven(k)}</td>)}
+              {spellen.map((_, k) => (
+                <td key={k}>{totaalBoven(k)}</td>
+              ))}
             </tr>
 
             {onder.map((cat, i) => (
               <tr key={cat.naam}>
                 <td>{cat.naam}</td>
+
                 {spellen.map((_, k) => (
                   <td key={k}>
                     {cat.vast ? (
-                      <select value={scoresOnder[i][k]} onChange={(e)=>setOnder(i,k,e.target.value)}>
+                      <select
+                        value={scoresOnder[i][k]}
+                        onChange={(e) => setOnder(i, k, e.target.value)}
+                      >
                         <option value="">-</option>
-<option value={0}>0</option>
-<option value={cat.vast}>{cat.vast}</option>
+                        <option value={0}>0</option>
+                        <option value={cat.vast}>{cat.vast}</option>
                       </select>
                     ) : (
                       <input
@@ -312,19 +344,19 @@ const totaalOnder = (k) => scoresOnder.reduce((s, r) => s + (Number(r[k]) || 0),
                         enterKeyHint="done"
                         pattern="[0-9]*"
                         value={
-    scoresOnder[i][k] === ""
-        ? ""
-        : scoresOnder[i][k] === 0
-        ? "❌"
-        : scoresOnder[i][k]
-}
-                        onChange={(e)=>setOnder(i,k,e.target.value)}
+                          scoresOnder[i][k] === ""
+                            ? ""
+                            : scoresOnder[i][k] === 0
+                            ? "❌"
+                            : scoresOnder[i][k]
+                        }
+                        onChange={(e) => setOnder(i, k, e.target.value)}
                         onKeyDown={(e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    e.target.blur();
-  }
-}}
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            e.target.blur();
+                          }
+                        }}
                       />
                     )}
                   </td>
@@ -334,19 +366,23 @@ const totaalOnder = (k) => scoresOnder.reduce((s, r) => s + (Number(r[k]) || 0),
 
             <tr className="total">
               <td>Totaal onder</td>
-              {spellen.map((_, k) => <td key={k}>{totaalOnder(k)}</td>)}
+              {spellen.map((_, k) => (
+                <td key={k}>{totaalOnder(k)}</td>
+              ))}
             </tr>
-<tr className="total">
-  <td>Totaal boven</td>
-  {spellen.map((_, k) => <td key={k}>{totaalBoven(k)}</td>)}
-</tr>
+
+            <tr className="total">
+              <td>Totaal boven</td>
+              {spellen.map((_, k) => (
+                <td key={k}>{totaalBoven(k)}</td>
+              ))}
+            </tr>
+
             <tr className="total">
               <td>Eind totaal</td>
               {spellen.map((_, k) => (
-  <td key={k}>
-    {eind(k)}
-  </td>
-))}
+                <td key={k}>{eind(k)}</td>
+              ))}
             </tr>
 
             <tr className="grand">
