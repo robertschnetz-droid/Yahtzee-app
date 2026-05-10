@@ -4,11 +4,9 @@ const bonusGeluid = new Audio("/sounds/Bonus.mp3");
 const aaahhhGeluid = new Audio("/sounds/Aaahhh.mp3");
 const yahtzeeGeluid = new Audio("/sounds/Yahtzee.mp3");
 const startupGeluid = new Audio("/sounds/Startup.mp3");
-const winstGeluid = new Audio("/sounds/winner.mp3");
 const sadTrombone = new Audio("/sounds/sadtrombone.mp3");
 function App() {
-  const [winnerPlayed, setWinnerPlayed] = useState(false);
-  const [bonusBehaald, setBonusBehaald] = useState(
+    const [bonusBehaald, setBonusBehaald] = useState(
   [false, false, false, false, false, false]
 );
   const [sadPlayed, setSadPlayed] = useState(false);
@@ -61,7 +59,6 @@ plingGeluid.play();
     setScoresBoven(boven.map(() => spellen.map(() => "" )));
     setScoresOnder(onder.map(() => spellen.map(() => "" )));
     setSadPlayed(false);
-setWinnerPlayed(false);
   }
 
   function setBoven(r, k, v) {
@@ -128,22 +125,6 @@ return nodig < 0 ? 0 : nodig;
 const totaalOnder = (k) => scoresOnder.reduce((s, r) => s + (Number(r[k]) || 0), 0);
   const eind = (k) => totaalBoven(k) + totaalOnder(k);
   const grand = () => spellen.reduce((s, _, k) => s + eind(k), 0);
-  const hoogsteScore = Math.max(...spellen.map((_, k) => eind(k)));
-
-const winnaar = (k) =>
-  eind(k) === hoogsteScore && hoogsteScore > 0;
-
-useEffect(() => {
-  const allesIngevuld =
-    scoresBoven.flat().every(v => v !== "") &&
-    scoresOnder.flat().every(v => v !== "");
-
-  if (allesIngevuld && !winnerPlayed) {
-    winstGeluid.currentTime = 0;
-    winstGeluid.play();
-    setWinnerPlayed(true);
-  }
-}, [scoresBoven, scoresOnder, winnerPlayed]);
 
   return (
     <div className="app">
@@ -387,7 +368,7 @@ return nieuw;
               <td>Eind totaal</td>
               {spellen.map((_, k) => (
   <td key={k}>
-    {eind(k)} {winnaar(k) ? "🏆" : ""}
+    {eind(k)}
   </td>
 ))}
             </tr>
