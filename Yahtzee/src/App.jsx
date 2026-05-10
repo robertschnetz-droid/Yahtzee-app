@@ -246,19 +246,23 @@ const totaalOnder = (k) => scoresOnder.reduce((s, r) => s + (Number(r[k]) || 0),
                 <td>{cat}</td>
                 {spellen.map((_, k) => (
                   <td key={k}>
-                    <input
-  type="text"
-  inputMode="numeric"
-  enterKeyHint="done"
-                      pattern="[0-9]*"
-                      value={scoresBoven[i][k] === "" ? "" : 
-                        scoresBoven[i][k] === 0 ? "❌" : 
-                        scoresBoven[i][k]}
-                      onChange={(e) => setBoven(i, k, e.target.value)}
-                      onKeyDown={(e) => {
-  if (e.key === "Enter") {
-  e.preventDefault();
-  e.target.blur();
+
+<select
+  value={scoresBoven[i][k]}
+  onChange={(e) => setBoven(i, k, e.target.value)}
+>
+  <option value="">-</option>
+  <option value="0">0</option>
+
+  {Array.from(
+    { length: 5 },
+    (_, n) => (n + 1) * (i + 1)
+  ).map((waarde) => (
+    <option key={waarde} value={waarde}>
+      {waarde}
+    </option>
+  ))}
+</select>
 
   const bovenCompleet =
     scoresBoven.every(rij => rij[k] !== "");
