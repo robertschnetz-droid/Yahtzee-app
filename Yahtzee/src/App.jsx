@@ -63,7 +63,7 @@ plingGeluid.play();
 
   function setBoven(r, k, v) {
   const value = v.replace(/[^0-9]/g, "");
-  const maxWaarden = [6, 12, 18, 24, 30, 36];
+  const maxWaarden = [5, 10, 15, 20, 25, 30];
 
 const nummer = Number(value);
 
