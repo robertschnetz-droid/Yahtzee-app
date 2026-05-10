@@ -1,0 +1,15 @@
+{
+  "name": "Yahtzee",
+  "short_name": "Yahtzee",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#101217",
+  "theme_color": "#101217",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
