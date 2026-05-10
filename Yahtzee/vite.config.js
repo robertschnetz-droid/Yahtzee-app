@@ -6,8 +6,9 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
-      manifest: {
+  registerType: 'autoUpdate',
+  includeAssets: ['icon.png'],
+  manifest: {
         name: 'Yahtzee',
         short_name: 'Yahtzee',
         description: 'Yahtzee score app',
