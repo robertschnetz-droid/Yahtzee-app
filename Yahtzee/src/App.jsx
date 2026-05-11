@@ -268,7 +268,10 @@ function App() {
                   <td key={k}>
                     <select
                       value={scoresBoven[i][k]}
-                      onChange={(e) => setBoven(i, k, e.target.value)}
+                      onChange={(e) => {
+  setBoven(i, k, e.target.value);
+  e.target.blur();
+}}
                     >
                       <option value="">-</option>
                       <option value="0">0</option>
@@ -331,7 +334,10 @@ function App() {
                     {cat.vast ? (
                       <select
                         value={scoresOnder[i][k]}
-                        onChange={(e) => setOnder(i, k, e.target.value)}
+                        onChange={(e) => {
+  setOnder(i, k, e.target.value);
+  e.target.blur();
+}}
                       >
                         <option value="">-</option>
                         <option value={0}>0</option>
