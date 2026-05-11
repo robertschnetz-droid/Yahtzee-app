@@ -152,8 +152,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
     const kopie = scoresOnder.map((x) => [...x]);
 
     kopie[r][k] = value === "" ? "" : Number(value);
-   controleerFinished(scoresBoven, kopie); 
-
+   
     if (Number(value) === 0 && value !== "") {
       aaahhhGeluid.currentTime = 0;
       aaahhhGeluid.play();
