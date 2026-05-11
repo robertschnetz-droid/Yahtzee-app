@@ -360,6 +360,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
                         value={scoresOnder[i][k]}
                         onChange={(e) => {
   setOnder(i, k, e.target.value);
+  controleerFinished(scoresBoven, scoresOnder);
   e.target.blur();
 }}
                       >
