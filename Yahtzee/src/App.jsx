@@ -360,7 +360,12 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
                         value={scoresOnder[i][k]}
                         onChange={(e) => {
   setOnder(i, k, e.target.value);
-  controleerFinished(scoresBoven, scoresOnder);
+
+  const kopie = scoresOnder.map((x) => [...x]);
+  kopie[i][k] = e.target.value === "" ? "" : Number(e.target.value);
+
+  controleerFinished(scoresBoven, kopie);
+
   e.target.blur();
 }}
                       >
