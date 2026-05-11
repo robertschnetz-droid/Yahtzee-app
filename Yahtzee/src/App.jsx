@@ -137,13 +137,13 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
     const kopie = scoresOnder.map((x) => [...x]);
 
     kopie[r][k] = value === "" ? "" : Number(value);
-    const allesBovenIngevuld = scoresBoven.every((rij, speler) =>
-  speler !== k || rij.every((vak) => vak !== "")
+    const allesBovenIngevuld = scoresBoven.every((rij) =>
+  rij.every((vak) => vak !== "")
 );
 
 const allesOnderIngevuld = kopie
   .slice(0, -1)
-  .every((rij) => rij[k] !== "");
+  .every((rij) => rij.every((vak) => vak !== ""));
 
 if (allesBovenIngevuld && allesOnderIngevuld) {
   finishedGeluid.currentTime = 0;
