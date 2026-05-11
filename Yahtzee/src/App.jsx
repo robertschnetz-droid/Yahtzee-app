@@ -101,15 +101,23 @@ function App() {
     const bovenCompleet = kopie.every((rij) => rij[k] !== "");
 
     if (nieuwTotaal >= 63 && !bonusBehaald[k]) {
-      bonusGeluid.currentTime = 0;
-      bonusGeluid.play();
+  bonusGeluid.currentTime = 0;
+  bonusGeluid.play();
 
-      setBonusBehaald((prev) => {
-        const nieuw = [...prev];
-        nieuw[k] = true;
-        return nieuw;
-      });
-    }
+  setBonusBehaald((prev) => {
+    const nieuw = [...prev];
+    nieuw[k] = true;
+    return nieuw;
+  });
+}
+
+if (nieuwTotaal < 63 && bonusBehaald[k]) {
+  setBonusBehaald((prev) => {
+    const nieuw = [...prev];
+    nieuw[k] = false;
+    return nieuw;
+  });
+}
 
     if (bovenCompleet && nieuwTotaal < 63 && !sadPlayed[k]) {
       sadTrombone.currentTime = 0;
