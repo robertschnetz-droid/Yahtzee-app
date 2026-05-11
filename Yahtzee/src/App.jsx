@@ -91,6 +91,7 @@ function App() {
     const kopie = scoresBoven.map((x) => [...x]);
 
     kopie[r][k] = waarde;
+    controleerFinished(kopie, scoresOnder);
     setScoresBoven(kopie);
 
     if (waarde === 0) {
@@ -132,23 +133,26 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
     }
   }
 
+  const controleerFinished = (bovenData, onderData) => {
+  const allesBovenIngevuld = bovenData.every((rij) =>
+    rij.every((vak) => vak !== "")
+  );
+
+  const allesOnderIngevuld = onderData
+    .slice(0, -1)
+    .every((rij) => rij.every((vak) => vak !== ""));
+
+  if (allesBovenIngevuld && allesOnderIngevuld) {
+    finishedGeluid.currentTime = 0;
+    finishedGeluid.play();
+  }
+};
   function setOnder(r, k, v) {
     const value = v.replace(/[^0-9]/g, "");
     const kopie = scoresOnder.map((x) => [...x]);
 
     kopie[r][k] = value === "" ? "" : Number(value);
-    const allesBovenIngevuld = scoresBoven.every((rij) =>
-  rij.every((vak) => vak !== "")
-);
-
-const allesOnderIngevuld = kopie
-  .slice(0, -1)
-  .every((rij) => rij.every((vak) => vak !== ""));
-
-if (allesBovenIngevuld && allesOnderIngevuld) {
-  finishedGeluid.currentTime = 0;
-  finishedGeluid.play();
-}
+   controleerFinished(scoresBoven, kopie); 
 
     if (Number(value) === 0 && value !== "") {
       aaahhhGeluid.currentTime = 0;
