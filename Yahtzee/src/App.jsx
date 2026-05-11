@@ -6,6 +6,7 @@ const aaahhhGeluid = new Audio("/sounds/Aaahhh.mp3");
 const yahtzeeGeluid = new Audio("/sounds/Yahtzee.mp3");
 const startupGeluid = new Audio("/sounds/Startup.mp3");
 const sadTrombone = new Audio("/sounds/sadtrombone.mp3");
+const finishedGeluid = new Audio("/sounds/finished.mp3");
 
 function App() {
   const spellen = [1, 2, 3, 4, 5, 6];
@@ -136,6 +137,18 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
     const kopie = scoresOnder.map((x) => [...x]);
 
     kopie[r][k] = value === "" ? "" : Number(value);
+    const allesBovenIngevuld = scoresBoven.every((rij, speler) =>
+  speler !== k || rij.every((vak) => vak !== "")
+);
+
+const allesOnderIngevuld = kopie
+  .slice(0, -1)
+  .every((rij) => rij[k] !== "");
+
+if (allesBovenIngevuld && allesOnderIngevuld) {
+  finishedGeluid.currentTime = 0;
+  finishedGeluid.play();
+}
 
     if (Number(value) === 0 && value !== "") {
       aaahhhGeluid.currentTime = 0;
