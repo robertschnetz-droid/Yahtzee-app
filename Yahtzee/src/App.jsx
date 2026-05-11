@@ -382,6 +382,9 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
                             : scoresOnder[i][k]
                         }
                         onChange={(e) => setOnder(i, k, e.target.value)}
+                        onBlur={() => {
+  controleerFinished(scoresBoven, scoresOnder);
+}}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
                             e.preventDefault();
