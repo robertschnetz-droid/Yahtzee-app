@@ -205,6 +205,9 @@
 }
 
 select.filled {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   background: #2fbf71 !important;
   background-color: #2fbf71 !important;
   border-color: #2fbf71 !important;
