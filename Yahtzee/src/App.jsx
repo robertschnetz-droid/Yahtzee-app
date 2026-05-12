@@ -53,9 +53,12 @@ function App() {
   }, [naam]);
 
   useEffect(() => {
+  if (!sessionStorage.getItem("startupPlayed")) {
     startupGeluid.currentTime = 0;
     startupGeluid.play();
-  }, []);
+    sessionStorage.setItem("startupPlayed", "true");
+  }
+}, []);
 
   const totaal = (k) =>
     scoresBoven.reduce((s, r) => s + (Number(r[k]) || 0), 0);
