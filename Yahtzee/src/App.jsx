@@ -9,7 +9,9 @@ const finishedGeluid = new Audio("/sounds/finished.mp3?v=2");
 const startupGeluid = new Audio("/sounds/Start Up.mp3?v=2");
 
 function App() {
-  const [gestart, setGestart] = useState(false);
+  const [gestart, setGestart] = useState(
+  sessionStorage.getItem("spelGestart") === "true"
+);
 
   const spellen = [1, 2, 3, 4, 5, 6];
   const boven = ["Enen", "Tweeën", "Drieën", "Vieren", "Vijven", "Zessen"];
@@ -197,6 +199,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
   }}
         onClick={() => {
           setGestart(true);
+          sessionStorage.setItem("spelGestart", "true");
         }}
       >
         Start spel
