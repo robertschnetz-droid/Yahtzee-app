@@ -463,7 +463,6 @@ disabled={scoresBoven[i][k] !== ""}
     : {}
 }
 
-disabled={scoresOnder[i][k] !== ""}
                         inputMode="numeric"
                         enterKeyHint="done"
                         pattern="[0-9]*"
