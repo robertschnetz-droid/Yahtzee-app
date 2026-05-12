@@ -346,6 +346,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
       }
     : {}
 }
+disabled={scoresBoven[i][k] !== ""}
                       value={scoresBoven[i][k]}
                       onChange={(e) => {
                         if (e.target.value === "cancel") {
@@ -427,6 +428,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
       }
     : {}
 }
+disabled={scoresOnder[i][k] !== ""}
                         value={scoresOnder[i][k]}
                         onChange={(e) => {
                           if (e.target.value === "cancel") {
