@@ -474,6 +474,7 @@ disabled={scoresBoven[i][k] !== ""}
                             : scoresOnder[i][k]
                         }
                         onChange={(e) => {
+  if (scoresOnder[i][k] !== "") return;
   setOnder(i, k, e.target.value);
   e.target.blur();
 }}
