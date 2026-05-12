@@ -473,7 +473,10 @@ disabled={scoresBoven[i][k] !== ""}
                             ? "❌"
                             : scoresOnder[i][k]
                         }
-                        onChange={(e) => setOnder(i, k, e.target.value)}
+                        onChange={(e) => {
+  setOnder(i, k, e.target.value);
+  e.target.blur();
+}}
                         onBlur={() => {
   controleerFinished(scoresBoven, scoresOnder);
 }}
