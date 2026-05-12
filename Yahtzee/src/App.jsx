@@ -336,7 +336,16 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
                 {spellen.map((_, k) => (
                   <td key={k}>
                     <select
-  className="filled TESTTEST"
+  style={
+  scoresBoven[i][k] !== ""
+    ? {
+        backgroundColor: "#2fbf71",
+        color: "white",
+        fontWeight: "bold",
+        border: "2px solid #2fbf71",
+      }
+    : {}
+}
                       value={scoresBoven[i][k]}
                       onChange={(e) => {
                         if (e.target.value === "cancel") {
@@ -408,7 +417,16 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
                   <td key={k}>
                     {cat.vast ? (
                       <select
-  className="filled TESTTEST"
+  style={
+  scoresOnder[i][k] !== ""
+    ? {
+        backgroundColor: "#2fbf71",
+        color: "white",
+        fontWeight: "bold",
+        border: "2px solid #2fbf71",
+      }
+    : {}
+}
                         value={scoresOnder[i][k]}
                         onChange={(e) => {
                           if (e.target.value === "cancel") {
