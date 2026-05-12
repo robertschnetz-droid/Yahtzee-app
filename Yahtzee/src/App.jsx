@@ -450,7 +450,7 @@ disabled={scoresBoven[i][k] !== ""}
                       </select>
                     ) : (
                       <input
-                        disabled={scoresOnder[i][k] !== ""}
+                        readOnly={scoresOnder[i][k] !== ""}
                       type="text"
                         style={
   scoresOnder[i][k] !== ""
