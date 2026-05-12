@@ -336,7 +336,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
                 {spellen.map((_, k) => (
                   <td key={k}>
                     <select
-  className={scoresBoven[i][k] !== "" ? "filled" : ""}
+  className={scoresBoven[i][k] !== "" ? "filled TESTTEST" : ""}
                       value={scoresBoven[i][k]}
                       onChange={(e) => {
                         if (e.target.value === "cancel") {
@@ -408,7 +408,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
                   <td key={k}>
                     {cat.vast ? (
                       <select
-  className={scoresOnder[i][k] !== "" ? "filled" : ""}
+  className={scoresOnder[i][k] !== "" ? "filled TESTTEST" : ""}
                         value={scoresOnder[i][k]}
                         onChange={(e) => {
                           if (e.target.value === "cancel") {
