@@ -205,7 +205,9 @@
 }
 
 select.filled {
+  background: #2fbf71 !important;
   background-color: #2fbf71 !important;
+  border-color: #2fbf71 !important;
   color: white !important;
   font-weight: bold;
 }
