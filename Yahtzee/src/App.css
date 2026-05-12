@@ -205,7 +205,7 @@
 }
 
 .filled {
-  background: #2fbf71;
-  color: white;
+  background-color: #2fbf71 !important;
+  color: white !important;
   font-weight: bold;
 }
