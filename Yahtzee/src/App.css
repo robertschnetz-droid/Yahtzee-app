@@ -182,3 +182,16 @@
     border-right-color: var(--border);
   }
 }
+
+.startScherm button {
+  font-size: 32px;
+  padding: 20px 40px;
+  border-radius: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.startLogo {
+  width: 200px;
+  margin-top: 20px;
+}
