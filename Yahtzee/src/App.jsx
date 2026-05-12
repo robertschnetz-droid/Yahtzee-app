@@ -424,6 +424,16 @@ disabled={scoresBoven[i][k] !== ""}
                     {cat.vast ? (
                       <select
   disabled={scoresOnder[i][k] !== ""}
+  style={
+  scoresOnder[i][k] !== ""
+    ? {
+        backgroundColor: "#2fbf71",
+        color: "white",
+        fontWeight: "bold",
+        border: "2px solid #2fbf71",
+      }
+    : {}
+}
   value={scoresOnder[i][k]}
   onChange={(e) => {
                           if (!window.confirm("Weet je het zeker?")) {
