@@ -461,6 +461,18 @@ disabled={scoresOnder[i][k] !== ""}
                     ) : (
                       <input
                         type="text"
+                        style={
+  scoresOnder[i][k] !== ""
+    ? {
+        backgroundColor: "#2fbf71",
+        color: "white",
+        fontWeight: "bold",
+        border: "2px solid #2fbf71",
+      }
+    : {}
+}
+
+disabled={scoresOnder[i][k] !== ""}
                         inputMode="numeric"
                         enterKeyHint="done"
                         pattern="[0-9]*"
