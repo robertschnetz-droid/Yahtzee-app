@@ -353,10 +353,10 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
                         (waarde) => (
                           <option key={waarde} value={waarde}>
                             {waarde}
-                            <option value="cancel">Annuleren</option>
-                          </option>
+                            </option>
                         )
                       )}
+                      <option value="cancel">Annuleren</option>
                     </select>
                   </td>
                 ))}
