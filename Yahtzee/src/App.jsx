@@ -19,8 +19,8 @@ function App() {
       <button
         onClick={() => {
           startupGeluid.currentTime = 0;
-          startupGeluid.play();
-          setGestart(true);
+          startupGeluid.play().catch(() => {});
+setGestart(true);
         }}
       >
         Start spel
