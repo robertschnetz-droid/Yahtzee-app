@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 
-const plingGeluid = new Audio("/sounds/Pling.mp3");
-const bonusGeluid = new Audio("/sounds/Bonus.mp3");
-const aaahhhGeluid = new Audio("/sounds/Aaahhh.mp3");
+const plingGeluid = new Audio("/sounds/Pling.mp3?v=2");
+const bonusGeluid = new Audio("/sounds/Bonus.mp3?v=2");
+const aaahhhGeluid = new Audio("/sounds/Aaahhh.mp3?v=2");
 const yahtzeeGeluid = new Audio("/sounds/Yahtzee.mp3?v=2");
-const sadTrombone = new Audio("/sounds/sadtrombone.mp3");
-const finishedGeluid = new Audio("/sounds/finished.mp3");
-const startupGeluid = new Audio("/sounds/Start Up.mp3");
+const sadTrombone = new Audio("/sounds/sadtrombone.mp3?v=2");
+const finishedGeluid = new Audio("/sounds/finished.mp3?v=2");
+const startupGeluid = new Audio("/sounds/Start Up.mp3?v=2");
 
 function App() {
   const [gestart, setGestart] = useState(false);
