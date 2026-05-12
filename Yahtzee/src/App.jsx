@@ -170,9 +170,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
   if (!gestart) {
   return (
     <div className="startScherm" style={{ background: "#101217", minHeight: "100vh" }}>
-      <h1>Yahtzee 🎲</h1>
-
-      <button
+            <button
         onClick={() => {
           startupGeluid.currentTime = 0;
           startupGeluid.play().catch(() => {});
@@ -181,6 +179,7 @@ setGestart(true);
       >
         Start spel
       </button>
+      <img src="/logo.png" alt="Logo" className="startLogo" />
     </div>
   );
 }
