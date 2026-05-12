@@ -203,3 +203,9 @@
   justify-content: center;
   gap: 20px;
 }
+
+.filled {
+  background: #2fbf71;
+  color: white;
+  font-weight: bold;
+}
