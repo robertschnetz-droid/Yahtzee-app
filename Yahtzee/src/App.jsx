@@ -346,10 +346,14 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
       }
     : {}
 }
-disabled={scoresBoven[i][k] !== ""}
                       value={scoresBoven[i][k]}
                       onChange={(e) => {
-                        if (e.target.value === "cancel") {
+
+  if (!window.confirm("Weet je het zeker?")) {
+    return;
+  }
+
+  if (e.target.value === "cancel") {
   e.target.blur();
   return;
 }
@@ -428,9 +432,11 @@ disabled={scoresBoven[i][k] !== ""}
       }
     : {}
 }
-disabled={scoresOnder[i][k] !== ""}
                         value={scoresOnder[i][k]}
                         onChange={(e) => {
+                          if (!window.confirm("Weet je het zeker?")) {
+  return;
+}
                           if (e.target.value === "cancel") {
   e.target.blur();
   return;
