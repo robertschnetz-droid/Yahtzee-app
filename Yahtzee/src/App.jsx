@@ -179,7 +179,7 @@ setGestart(true);
       >
         Start spel
       </button>
-      <img src="/logo.png" alt="Logo" className="startLogo" />
+      <img src="/icon.png" alt="Logo" className="startLogo" />
     </div>
   );
 }
