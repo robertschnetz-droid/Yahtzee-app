@@ -9,6 +9,8 @@ const finishedGeluid = new Audio("/sounds/finished.mp3");
 const startupGeluid = new Audio("/sounds/Start Up.mp3");
 
 function App() {
+  const [gestart, setGestart] = useState(false);
+
   if (!gestart) {
   return (
     <div className="startScherm">
@@ -42,8 +44,7 @@ function App() {
 
   const [bonusBehaald, setBonusBehaald] = useState([false, false, false, false, false, false]);
   const [sadPlayed, setSadPlayed] = useState([false, false, false, false, false, false]);
-  const [gestart, setGestart] = useState(false);
-
+  
   const [scoresBoven, setScoresBoven] = useState(() => {
     const data = localStorage.getItem("scoresBoven");
     return data ? JSON.parse(data) : boven.map(() => spellen.map(() => ""));
