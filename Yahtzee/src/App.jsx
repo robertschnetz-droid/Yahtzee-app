@@ -307,8 +307,6 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
         }
       `}</style>
 
-      <h1>YAHTZEE</h1>
-
       <div className="topbar">
         <button onClick={nieuwSpel}>Nieuw spel</button>
         <input
