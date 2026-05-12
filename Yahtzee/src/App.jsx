@@ -191,12 +191,17 @@ setGestart(true);
         * { box-sizing: border-box; }
 
         .app {
-          min-height: 100vh;
-          background: #101217;
-          color: #f5f5f5;
-          font-family: Arial, sans-serif;
-          padding: 16px;
-        }
+  min-height: 100vh;
+  background: #101217;
+  color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  padding: 16px;
+}
+
+.startScherm {
+  background: #101217;
+  min-height: 100vh;
+}
 
         h1 {
           text-align: center;
