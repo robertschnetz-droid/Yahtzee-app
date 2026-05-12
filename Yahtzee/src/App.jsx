@@ -193,9 +193,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
     border: "none"
   }}
         onClick={() => {
-          startupGeluid.currentTime = 0;
-          startupGeluid.play().catch(() => {});
-setGestart(true);
+          setGestart(true);
         }}
       >
         Start spel
