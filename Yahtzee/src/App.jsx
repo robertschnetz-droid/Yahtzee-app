@@ -449,45 +449,40 @@ disabled={scoresBoven[i][k] !== ""}
                         <option value="cancel">Annuleren</option>
                       </select>
                     ) : (
-                      <input
-                        readOnly={scoresOnder[i][k] !== ""}
-                      type="text"
-                        style={
-  scoresOnder[i][k] !== ""
-    ? {
-        backgroundColor: "#2fbf71",
-        color: "white",
-        fontWeight: "bold",
-        border: "2px solid #2fbf71",
-      }
-    : {}
-}
+                      <select
+  disabled={scoresOnder[i][k] !== ""}
+  style={
+    scoresOnder[i][k] !== ""
+      ? {
+          backgroundColor: "#2fbf71",
+          color: "white",
+          fontWeight: "bold",
+          border: "2px solid #2fbf71",
+        }
+      : {}
+  }
+  value={scoresOnder[i][k]}
+  onChange={(e) => {
+    if (e.target.value === "cancel") {
+      e.target.blur();
+      return;
+    }
 
-                        inputMode="numeric"
-                        enterKeyHint="done"
-                        pattern="[0-9]*"
-                        value={
-                          scoresOnder[i][k] === ""
-                            ? ""
-                            : scoresOnder[i][k] === 0
-                            ? "❌"
-                            : scoresOnder[i][k]
-                        }
-                        onChange={(e) => {
-  if (scoresOnder[i][k] !== "") return;
-  setOnder(i, k, e.target.value);
-  e.target.blur();
-}}
-                        onBlur={() => {
-  controleerFinished(scoresBoven, scoresOnder);
-}}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            e.preventDefault();
-                            e.target.blur();
-                          }
-                        }}
-                      />
+    if (!window.confirm("Weet je het zeker?")) {
+      return;
+    }
+
+    setOnder(i, k, e.target.value);
+  }}
+>
+  <option value="">-</option>
+  {Array.from({ length: 37 }, (_, n) => n).map((waarde) => (
+    <option key={waarde} value={waarde}>
+      {waarde}
+    </option>
+  ))}
+  <option value="cancel">Annuleren</option>
+</select>
                     )}
                   </td>
                 ))}
