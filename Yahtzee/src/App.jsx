@@ -338,12 +338,17 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
                     <select
                       value={scoresBoven[i][k]}
                       onChange={(e) => {
+                        if (e.target.value === "cancel") {
+  e.target.blur();
+  return;
+}
   setBoven(i, k, e.target.value);
   e.target.blur();
 }}
                     >
-                      <option value="">Annuleren</option>
-                      <option value="0">0</option>
+                      <option value="">-</option>
+<option value="cancel">Annuleren</option>
+<option value="0">0</option>
 
                       {Array.from({ length: 5 }, (_, n) => (n + 1) * (i + 1)).map(
                         (waarde) => (
@@ -404,6 +409,10 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
                       <select
                         value={scoresOnder[i][k]}
                         onChange={(e) => {
+                          if (e.target.value === "cancel") {
+  e.target.blur();
+  return;
+}
   setOnder(i, k, e.target.value);
 
   const kopie = scoresOnder.map((x) => [...x]);
@@ -414,8 +423,9 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
   e.target.blur();
 }}
                       >
-                        <option value="">Annuleren</option>
-                        <option value={0}>0</option>
+                        <option value="">-</option>
+<option value="cancel">Annuleren</option>
+<option value="0">0</option>
                         <option value={cat.vast}>{cat.vast}</option>
                       </select>
                     ) : (
