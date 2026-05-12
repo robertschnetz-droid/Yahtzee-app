@@ -347,13 +347,13 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
 }}
                     >
                       <option value="">-</option>
-<option value="cancel">Annuleren</option>
 <option value="0">0</option>
 
                       {Array.from({ length: 5 }, (_, n) => (n + 1) * (i + 1)).map(
                         (waarde) => (
                           <option key={waarde} value={waarde}>
                             {waarde}
+                            <option value="cancel">Annuleren</option>
                           </option>
                         )
                       )}
@@ -424,9 +424,9 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
 }}
                       >
                         <option value="">-</option>
-<option value="cancel">Annuleren</option>
 <option value="0">0</option>
                         <option value={cat.vast}>{cat.vast}</option>
+                        <option value="cancel">Annuleren</option>
                       </select>
                     ) : (
                       <input
