@@ -423,19 +423,9 @@ disabled={scoresBoven[i][k] !== ""}
                   <td key={k}>
                     {cat.vast ? (
                       <select
-  style={
-  scoresOnder[i][k] !== ""
-    ? {
-        backgroundColor: "#2fbf71",
-        color: "white",
-        fontWeight: "bold",
-        border: "2px solid #2fbf71",
-      }
-    : {}
-}
-disabled={scoresOnder[i][k] !== ""}
-                        value={scoresOnder[i][k]}
-                        onChange={(e) => {
+  disabled={scoresOnder[i][k] !== ""}
+  value={scoresOnder[i][k]}
+  onChange={(e) => {
                           if (!window.confirm("Weet je het zeker?")) {
   return;
 }
