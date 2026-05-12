@@ -204,13 +204,14 @@
   gap: 20px;
 }
 
-select.filled {
+select.filled,
+select.filled option {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   background: #2fbf71 !important;
   background-color: #2fbf71 !important;
-  border-color: #2fbf71 !important;
   color: white !important;
+  border: 2px solid #2fbf71 !important;
   font-weight: bold;
 }
