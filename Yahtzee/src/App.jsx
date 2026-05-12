@@ -169,7 +169,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
   }
   if (!gestart) {
   return (
-    <div className="startScherm">
+    <div className="startScherm" style={{ background: "#101217", minHeight: "100vh" }}>
       <h1>Yahtzee 🎲</h1>
 
       <button
