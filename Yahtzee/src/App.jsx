@@ -11,23 +11,6 @@ const startupGeluid = new Audio("/sounds/Start Up.mp3");
 function App() {
   const [gestart, setGestart] = useState(false);
 
-  if (!gestart) {
-  return (
-    <div className="startScherm">
-      <h1>Yahtzee 🎲</h1>
-
-      <button
-        onClick={() => {
-          startupGeluid.currentTime = 0;
-          startupGeluid.play().catch(() => {});
-setGestart(true);
-        }}
-      >
-        Start spel
-      </button>
-    </div>
-  );
-}
   const spellen = [1, 2, 3, 4, 5, 6];
   const boven = ["Enen", "Tweeën", "Drieën", "Vieren", "Vijven", "Zessen"];
 
@@ -184,6 +167,23 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
 
     setScoresOnder(kopie);
   }
+  if (!gestart) {
+  return (
+    <div className="startScherm">
+      <h1>Yahtzee 🎲</h1>
+
+      <button
+        onClick={() => {
+          startupGeluid.currentTime = 0;
+          startupGeluid.play().catch(() => {});
+setGestart(true);
+        }}
+      >
+        Start spel
+      </button>
+    </div>
+  );
+}
 
   return (
     <div className="app">
