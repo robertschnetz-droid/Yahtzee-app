@@ -216,8 +216,8 @@ select.filled option {
   font-weight: bold;
 }
 
-.filled {
-  background: #2fbf71 !important;
+select.filled {
+  background-color: #2fbf71 !important;
   color: white !important;
   font-weight: bold;
 }
