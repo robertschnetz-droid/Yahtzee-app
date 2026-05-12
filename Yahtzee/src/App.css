@@ -215,3 +215,9 @@ select.filled option {
   border: 2px solid #2fbf71 !important;
   font-weight: bold;
 }
+
+.filled {
+  background: #2fbf71 !important;
+  color: white !important;
+  font-weight: bold;
+}
