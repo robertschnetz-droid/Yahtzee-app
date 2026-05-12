@@ -342,7 +342,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
   e.target.blur();
 }}
                     >
-                      <option value="">-</option>
+                      <option value="">Annuleren</option>
                       <option value="0">0</option>
 
                       {Array.from({ length: 5 }, (_, n) => (n + 1) * (i + 1)).map(
@@ -414,7 +414,7 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
   e.target.blur();
 }}
                       >
-                        <option value="">-</option>
+                        <option value="">Annuleren</option>
                         <option value={0}>0</option>
                         <option value={cat.vast}>{cat.vast}</option>
                       </select>
