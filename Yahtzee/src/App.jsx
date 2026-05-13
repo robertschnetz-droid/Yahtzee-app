@@ -316,11 +316,17 @@ if (nieuwTotaal < 63 && bonusBehaald[k]) {
       <div className="topbar">
         <button onClick={nieuwSpel}>Nieuw spel</button>
         <input
-          className="nameInput"
-          value={naam}
-          onChange={(e) => setNaam(e.target.value)}
-          placeholder="Naam speler"
-        />
+  className="nameInput"
+  value={naam}
+  onChange={(e) => setNaam(e.target.value)}
+  placeholder="Naam speler"
+  enterKeyHint="done"
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      e.target.blur();
+    }
+  }}
+/>
       </div>
 
       <div className="tableWrap">
