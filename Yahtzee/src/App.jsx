@@ -360,7 +360,7 @@ if (
 >
                 <td
   style={{
-    opacity: scoresBoven[i].every((v) => v !== "") ? 0.45 : 1,
+    opacity: scoresBoven[i].every((v) => v !== "") ? 0.35 : 1,
   }}
 >
   {cat}
@@ -457,7 +457,7 @@ disabled={scoresBoven[i][k] !== ""}
 >
                 <td
   style={{
-    opacity: scoresOnder[i].every((v) => v !== "") ? 0.45 : 1,
+    opacity: scoresOnder[i].every((v) => v !== "") ? 0.35 : 1,
   }}
 >
   {cat.naam}
