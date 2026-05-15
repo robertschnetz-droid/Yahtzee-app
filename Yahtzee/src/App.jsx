@@ -451,8 +451,17 @@ disabled={scoresBoven[i][k] !== ""}
             </tr>
 
             {onder.map((cat, i) => (
-              <tr key={cat.naam}>
-                <td>{cat.naam}</td>
+              <tr
+  key={cat.naam}
+  className={scoresOnder[i].every((v) => v !== "") ? "rij-klaar" : ""}
+>
+                <td
+  style={{
+    opacity: scoresOnder[i].every((v) => v !== "") ? 0.45 : 1,
+  }}
+>
+  {cat.naam}
+</td>
 
                 {spellen.map((_, k) => (
                   <td key={k}>
