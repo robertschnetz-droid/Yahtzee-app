@@ -110,6 +110,7 @@ function App() {
     const bovenCompleet = kopie.every((rij) => rij[k] !== "");
 
     if (nieuwTotaal >= 63 && !bonusBehaald[k]) {
+      if (controleerFinished(scoresBoven, scoresOnder)) return;
   bonusGeluid.currentTime = 0;
   bonusGeluid.play();
 
@@ -145,6 +146,8 @@ if (bovenCompleet && nieuwTotaal < 63 && !sadPlayed[k]) {
   if (allesBovenIngevuld && allesOnderIngevuld) {
     finishedGeluid.currentTime = 0;
     finishedGeluid.play();
+
+    return true;
   }
 };
   function setOnder(r, k, v) {
