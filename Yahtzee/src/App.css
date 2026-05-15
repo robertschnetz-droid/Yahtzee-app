@@ -224,5 +224,5 @@ select.filled {
 
 .rij-klaar td,
 .rij-klaar select {
-  opacity: 0.45;
+  opacity: 0.45 !important;
 }
