@@ -363,16 +363,18 @@ if (
                 {spellen.map((_, k) => (
                   <td key={k}>
                     <select
-  style={
-  scoresBoven[i][k] !== ""
+  style={{
+  opacity: scoresBoven[i].every((v) => v !== "") ? 0.45 : 1,
+
+  ...(scoresBoven[i][k] !== ""
     ? {
         backgroundColor: "#2fbf71",
         color: "white",
         fontWeight: "bold",
         border: "2px solid #2fbf71",
       }
-    : {}
-}
+    : {})
+}}
 disabled={scoresBoven[i][k] !== ""}
                       value={scoresBoven[i][k]}
                       onChange={(e) => {
