@@ -128,7 +128,17 @@ function App() {
   
 }
 
-if (bovenCompleet && nieuwTotaal < 63 && !sadPlayed[k]) {
+const spelKlaarNaDezeZet =
+  bovenCompleet &&
+  scoresOnder.slice(0, -1).every((rij) =>
+    rij.every((vak) => vak !== "")
+  );
+if (
+  bovenCompleet &&
+  nieuwTotaal < 63 &&
+  !sadPlayed[k] &&
+  !spelKlaarNaDezeZet
+) {
       sadTrombone.currentTime = 0;
       sadTrombone.play();
 
