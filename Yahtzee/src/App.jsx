@@ -109,7 +109,7 @@ function App() {
     const nieuwTotaal = kopie.reduce((s, rij) => s + (Number(rij[k]) || 0), 0);
     const bovenCompleet = kopie.every((rij) => rij[k] !== "");
 
-    if (nieuwTotaal >= 63 && !bonusBehaald[k]) {
+    if (nieuwTotaal >= 63 && !bonusBehaald[k] && !(bovenCompleet && onderCompleet)) {
   bonusGeluid.currentTime = 0;
   bonusGeluid.play();
 
@@ -118,9 +118,10 @@ function App() {
     nieuw[k] = true;
     return nieuw;
   });
+  
 }
 
-if (nieuwTotaal < 63 && bonusBehaald[k]) {
+if (nieuwTotaal >= 63 && !bonusBehaald[k] && !(bovenCompleet && onderCompleet)) {
   setBonusBehaald((prev) => {
     const nieuw = [...prev];
     nieuw[k] = false;
