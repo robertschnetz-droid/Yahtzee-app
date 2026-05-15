@@ -354,7 +354,10 @@ if (
 
           <tbody>
             {boven.map((cat, i) => (
-              <tr key={cat}>
+              <tr
+  key={cat}
+  className="rij-klaar"
+>
                 <td>{cat}</td>
 
                 {spellen.map((_, k) => (
