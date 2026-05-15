@@ -356,9 +356,15 @@ if (
             {boven.map((cat, i) => (
               <tr
   key={cat}
-  className="rij-klaar"
+  className={scoresBoven[i].every((v) => v !== "") ? "rij-klaar" : ""}
 >
-                <td>{cat}</td>
+                <td
+  style={{
+    opacity: scoresBoven[i].every((v) => v !== "") ? 0.45 : 1,
+  }}
+>
+  {cat}
+</td>
 
                 {spellen.map((_, k) => (
                   <td key={k}>
