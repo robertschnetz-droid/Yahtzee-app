@@ -222,6 +222,7 @@ select.filled {
   font-weight: bold;
 }
 
-.rij-klaar {
+.rij-klaar td,
+.rij-klaar select {
   opacity: 0.45;
 }
