@@ -222,7 +222,6 @@ select.filled {
   font-weight: bold;
 }
 
-.rij-klaar td,
-.rij-klaar select {
-  opacity: 0.45 !important;
+.rij-klaar td {
+  background: red !important;
 }
