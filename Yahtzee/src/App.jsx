@@ -110,9 +110,7 @@ function App() {
     const bovenCompleet = kopie.every((rij) => rij[k] !== "");
 
     if (nieuwTotaal >= 63 && !bonusBehaald[k]) {
-      const spelKlaarNaDezeZet = kopie.every((rij) =>
-  rij.every((cel) => cel !== "")
-);
+      const spelKlaarNaDezeZet = false;
   if (!spelKlaarNaDezeZet) {
   bonusGeluid.currentTime = 0;
   bonusGeluid.play();
