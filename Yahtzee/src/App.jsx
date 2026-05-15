@@ -110,9 +110,11 @@ function App() {
     const bovenCompleet = kopie.every((rij) => rij[k] !== "");
 
     if (nieuwTotaal >= 63 && !bonusBehaald[k]) {
-      if (controleerFinished(scoresBoven, scoresOnder)) return;
+      const isLaatsteVakje = bovenCompleet && onderCompleet;
+  if (!isLaatsteVakje) {
   bonusGeluid.currentTime = 0;
   bonusGeluid.play();
+}
 
   setBonusBehaald((prev) => {
     const nieuw = [...prev];
