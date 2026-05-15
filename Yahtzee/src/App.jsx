@@ -130,7 +130,7 @@ function App() {
 
 const spelKlaarNaDezeZet =
   bovenCompleet &&
-  scoresOnder.slice(0, -1).every((rij) =>
+  kopie.slice(0, -1).every((rij) =>
     rij.every((vak) => vak !== "")
   );
 if (
