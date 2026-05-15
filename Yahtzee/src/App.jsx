@@ -169,7 +169,7 @@ if (bovenCompleet && nieuwTotaal < 63 && !sadPlayed[k]) {
 
     if ((r === 5 || r === 7) && Number(value) > 0) {
       yahtzeeGeluid.currentTime = 0;
-      yahtzeeGeluid.play();
+      yahtzeeGeluid.play().catch(() => {});
     }
 
     setScoresOnder(kopie);
