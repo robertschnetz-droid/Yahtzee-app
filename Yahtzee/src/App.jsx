@@ -510,7 +510,7 @@ disabled={scoresBoven[i][k] !== ""}
   }}
 >
   <option value="">-</option>
-  {Array.from({ length: 37 }, (_, n) => n).map((waarde) => (
+  {Array.from({ length: 32 }, (_, n) => n + 5).map((waarde) => (
     <option key={waarde} value={waarde}>
       {waarde}
     </option>
