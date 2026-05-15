@@ -221,3 +221,7 @@ select.filled {
   color: white !important;
   font-weight: bold;
 }
+
+.rij-klaar {
+  opacity: 0.45;
+}
