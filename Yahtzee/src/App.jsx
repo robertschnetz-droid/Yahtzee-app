@@ -171,21 +171,17 @@ if (
     const kopie = scoresOnder.map((x) => [...x]);
 
     kopie[r][k] = value === "" ? "" : Number(value);
+
+    const totaalVakjes =
+  scoresBoven.flat().filter((v) => v !== "").length +
+  kopie.flat().filter((v) => v !== "").length;
    
-    if (Number(value) === 0 && value !== "") {
+    if (Number(value) === 0 && value !== "" && totaalVakjes < 78) {
       aaahhhGeluid.currentTime = 0;
       aaahhhGeluid.play();
     }
 
-    const spelKlaarNaDezeZet =
-  scoresBoven.every((rij) => rij.every((vak) => vak !== "")) &&
-  kopie.every((rij) => rij.every((vak) => vak !== ""));
-
-const totaalVakjes =
-  scoresBoven.flat().filter((v) => v !== "").length +
-  kopie.flat().filter((v) => v !== "").length;
-
-if ((r === 5 || r === 7) && Number(value) > 0 && totaalVakjes < 78) {
+  if ((r === 5 || r === 7) && Number(value) > 0 && totaalVakjes < 78) {
   yahtzeeGeluid.currentTime = 0;
   yahtzeeGeluid.play().catch(() => {});
 }
