@@ -130,14 +130,14 @@ function App() {
 
 const spelKlaarNaDezeZet =
   bovenCompleet &&
-  kopie.slice(0, -1).every((rij) =>
+  scoresOnder.every((rij) =>
     rij.every((vak) => vak !== "")
   );
 if (
   bovenCompleet &&
   nieuwTotaal < 63 &&
   !sadPlayed[k] &&
-  !onderData.every((rij) => rij.every((vak) => vak !== ""))
+  !spelKlaarNaDezeZet
 ) {
       sadTrombone.currentTime = 0;
       sadTrombone.play();
