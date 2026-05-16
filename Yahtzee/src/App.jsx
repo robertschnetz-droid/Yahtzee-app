@@ -467,7 +467,7 @@ disabled={scoresBoven[i][k] !== ""}
                   <td
   key={k}
   style={{
-    opacity: scoresOnder[i].every((v) => v !== "") ? 0.35 : 1,
+    opacity: false ? 0.35 : 1,
   }}
 >
                     {cat.vast ? (
