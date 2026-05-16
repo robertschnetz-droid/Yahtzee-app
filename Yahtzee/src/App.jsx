@@ -472,7 +472,7 @@ disabled={scoresBoven[i][k] !== ""}
 >
                     {cat.vast ? (
                       <select
-  disabled={scoresOnder[i][k] !== ""}
+  disabled={false}
   style={
   scoresOnder[i][k] !== ""
     ? {
