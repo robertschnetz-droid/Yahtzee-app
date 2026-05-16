@@ -469,7 +469,7 @@ disabled={scoresBoven[i][k] !== ""}
                       <select
   disabled={scoresOnder[i][k] !== ""}
   style={
-  scoresOnder[i][k] !== ""
+  scoresOnder[i].every((v) => v !== "")
     ? {
         backgroundColor: "#2fbf71",
         color: "white",
