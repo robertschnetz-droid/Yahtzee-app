@@ -238,8 +238,3 @@ select.filled {
     transform: scale(1);
   }
 }
-
-.yahtzee-animation {
-  animation: yahtzeePulse 0.7s ease;
-  background: yellow !important;
-}
