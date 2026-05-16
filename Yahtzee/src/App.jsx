@@ -504,7 +504,15 @@ function App() {
                   <td style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>{cat.naam}</td>
 
                   {spellen.map((_, k) => (
-                    <td key={k}>
+                    <td
+  key={k}
+  className={
+    cat.naam === "Yahtzee" &&
+    scoresOnder[i][k] === 50
+      ? "yahtzee-animation"
+      : ""
+  }
+>
                       {cat.automatisch ? (
                         <span
                           style={{
@@ -519,13 +527,7 @@ function App() {
                         </span>
                       ) : (
                         <select
-  className={
-    cat.naam === "Yahtzee" &&
-    scoresOnder[i][k] === 50
-      ? "yahtzee-animation"
-      : ""
-  }
-                          style={ingevuldStyle(scoresOnder[i][k] !== "", rijIsVol)}
+                            style={ingevuldStyle(scoresOnder[i][k] !== "", rijIsVol)}
                           disabled={scoresOnder[i][k] !== ""}
                           value={scoresOnder[i][k]}
                           onChange={(e) => {
