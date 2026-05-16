@@ -370,7 +370,7 @@ if (
                   <td key={k}>
                     <select
   style={{
-  opacity: scoresBoven[i].every((v) => v !== "") ? 0.45 : 1,
+  opacity: scoresBoven[i].every((v) => v !== "") ? 0.35 : 1,
 
   ...(scoresBoven[i][k] !== ""
     ? {
@@ -467,7 +467,6 @@ disabled={scoresBoven[i][k] !== ""}
                   <td
   key={k}
   style={{
-    opacity: 1,
   }}
 >
                     {cat.vast ? (
@@ -479,7 +478,7 @@ disabled={scoresBoven[i][k] !== ""}
         backgroundColor: "#2fbf71",
         color: "white",
         fontWeight: "bold",
-        opacity: 1,
+        opacity: scoresOnder[i].every((v) => v !== "") ? 0.35 : 1,
         WebkitTextFillColor: "white",
         border: "2px solid #2fbf71",
       }
