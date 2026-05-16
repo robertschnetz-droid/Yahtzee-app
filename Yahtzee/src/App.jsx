@@ -172,16 +172,16 @@ if (
 
     kopie[r][k] = value === "" ? "" : Number(value);
 
-    const totaalVakjes =
-  scoresBoven.flat().filter((v) => v !== "").length +
-  kopie.flat().filter((v) => v !== "").length;
+    const spelKlaarNaDezeZet =
+  scoresBoven.every((rij) => rij.every((vak) => vak !== "")) &&
+  kopie.slice(0, -1).every((rij) => rij.every((vak) => vak !== ""));
    
-    if (Number(value) === 0 && value !== "" && totaalVakjes < 78) {
+    if (Number(value) === 0 && value !== "" && !spelKlaarNaDezeZet) {
       aaahhhGeluid.currentTime = 0;
       aaahhhGeluid.play();
     }
 
-  if ((r === 5 || r === 7) && Number(value) > 0 && totaalVakjes < 78) {
+  if ((r === 5 || r === 7) && Number(value) > 0 && !spelKlaarNaDezeZet) {
   yahtzeeGeluid.currentTime = 0;
   yahtzeeGeluid.play().catch(() => {});
 }
