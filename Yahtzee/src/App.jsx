@@ -181,10 +181,14 @@ if (
   scoresBoven.every((rij) => rij.every((vak) => vak !== "")) &&
   kopie.every((rij) => rij.every((vak) => vak !== ""));
 
-if ((r === 5 || r === 7) && Number(value) > 0 && !spelKlaarNaDezeZet) {
-      yahtzeeGeluid.currentTime = 0;
-      yahtzeeGeluid.play().catch(() => {});
-    }
+const totaalVakjes =
+  scoresBoven.flat().filter((v) => v !== "").length +
+  kopie.flat().filter((v) => v !== "").length;
+
+if ((r === 5 || r === 7) && Number(value) > 0 && totaalVakjes < 78) {
+  yahtzeeGeluid.currentTime = 0;
+  yahtzeeGeluid.play().catch(() => {});
+}
 
     setScoresOnder(kopie);
   }
