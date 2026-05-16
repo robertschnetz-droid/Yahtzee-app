@@ -467,12 +467,12 @@ disabled={scoresBoven[i][k] !== ""}
                   <td
   key={k}
   style={{
-    opacity: scoresOnder[i].filter((v) => v !== "").length === 6 ? 0.35 : 1,
+    opacity: 1,
   }}
 >
                     {cat.vast ? (
                       <select
-  disabled={false}
+  disabled={scoresOnder[i][k] !== ""}
   style={
   scoresOnder[i][k] !== ""
     ? {
