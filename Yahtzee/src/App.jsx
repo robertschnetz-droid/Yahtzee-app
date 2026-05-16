@@ -176,7 +176,14 @@ if (
   scoresBoven.every((rij) => rij.every((vak) => vak !== "")) &&
   kopie.every((rij) => rij.every((vak) => vak !== ""));
    
-    if (Number(value) === 0 && value !== "" && !spelKlaarNaDezeZet) {
+    if (
+  Number(value) === 0 &&
+  value !== "" &&
+  !(
+    scoresBoven.every((rij) => rij.every((vak) => vak !== "")) &&
+    kopie.every((rij) => rij.every((vak) => vak !== ""))
+  )
+) {
       aaahhhGeluid.currentTime = 0;
       aaahhhGeluid.play();
     }
