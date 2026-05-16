@@ -510,38 +510,50 @@ disabled={scoresBoven[i][k] !== ""}
                         <option value="cancel">Annuleren</option>
                       </select>
                     ) : (
-                      <select
-  disabled={scoresOnder[i][k] !== ""}
-  style={
-    scoresOnder[i][k] !== ""
+<select
+  style={{
+    opacity: scoresOnder[i].every((v) => v !== "") ? 0.45 : 1,
+
+    ...(scoresOnder[i][k] !== ""
       ? {
           backgroundColor: "#2fbf71",
           color: "white",
           fontWeight: "bold",
           border: "2px solid #2fbf71",
         }
-      : {}
-  }
+      : {})
+  }}
+  disabled={scoresOnder[i][k] !== ""}
   value={scoresOnder[i][k]}
   onChange={(e) => {
+    if (!window.confirm("Weet je het zeker?")) {
+      return;
+    }
+
     if (e.target.value === "cancel") {
       e.target.blur();
       return;
     }
 
-    if (!window.confirm("Weet je het zeker?")) {
-      return;
-    }
-
     setOnder(i, k, e.target.value);
+
+    const kopie = scoresOnder.map((x) => [...x]);
+    kopie[i][k] = e.target.value === "" ? "" : Number(e.target.value);
+
+    controleerFinished(scoresBoven, kopie);
+
+    e.target.blur();
   }}
 >
   <option value="">-</option>
-  {[5, 6, 7, 8, 9, 10].map((waarde) => (
+  <option value="0">0</option>
+
+  {Array.from({ length: 32 }, (_, n) => n + 5).map((waarde) => (
     <option key={waarde} value={waarde}>
       {waarde}
     </option>
   ))}
+
   <option value="cancel">Annuleren</option>
 </select>
                     )}
