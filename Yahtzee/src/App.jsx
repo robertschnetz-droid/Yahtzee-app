@@ -467,7 +467,7 @@ disabled={scoresBoven[i][k] !== ""}
                   <td
   key={k}
   style={{
-    opacity: scoresOnder[i].every((v) => v !== "") ? 0.35 : 1,
+    opacity: scoresOnder[i].filter((v) => v !== "").length === 6 ? 0.35 : 1,
   }}
 >
                     {cat.vast ? (
@@ -479,6 +479,7 @@ disabled={scoresBoven[i][k] !== ""}
         backgroundColor: "#2fbf71",
         color: "white",
         fontWeight: "bold",
+        opacity: 1,
         WebkitTextFillColor: "white",
 appearance: "none",
 WebkitAppearance: "none",
