@@ -177,7 +177,11 @@ if (
       aaahhhGeluid.play();
     }
 
-    if ((r === 5 || r === 7) && Number(value) > 0) {
+    const spelKlaarNaDezeZet = kopie.every((rij) =>
+  rij.every((vak) => vak !== "")
+);
+
+if ((r === 5 || r === 7) && Number(value) > 0 && !spelKlaarNaDezeZet) {
       yahtzeeGeluid.currentTime = 0;
       yahtzeeGeluid.play().catch(() => {});
     }
