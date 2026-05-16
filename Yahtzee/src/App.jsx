@@ -481,6 +481,8 @@ disabled={scoresBoven[i][k] !== ""}
         fontWeight: "bold",
         WebkitTextFillColor: "white",
 opacity: 1,
+appearance: "none",
+WebkitAppearance: "none",
         border: "2px solid #2fbf71",
       }
     : {}
