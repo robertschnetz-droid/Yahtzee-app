@@ -471,7 +471,7 @@ disabled={scoresBoven[i][k] !== ""}
   style={
   scoresOnder[i][k] !== ""
     ? {
-        backgroundColor: "#2fbf71",
+        backgroundColor: "red",
         color: "white",
         fontWeight: "bold",
         border: "2px solid #2fbf71",
