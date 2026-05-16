@@ -137,7 +137,7 @@ if (
   bovenCompleet &&
   nieuwTotaal < 63 &&
   !sadPlayed[k] &&
-  !spelKlaarNaDezeZet
+  !onderData.every((rij) => rij.every((vak) => vak !== ""))
 ) {
       sadTrombone.currentTime = 0;
       sadTrombone.play();
