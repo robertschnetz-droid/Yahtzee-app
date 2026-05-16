@@ -174,7 +174,7 @@ if (
 
     const spelKlaarNaDezeZet =
   scoresBoven.every((rij) => rij.every((vak) => vak !== "")) &&
-  kopie.slice(0, -1).every((rij) => rij.every((vak) => vak !== ""));
+  kopie.every((rij) => rij.every((vak) => vak !== ""));
    
     if (Number(value) === 0 && value !== "" && !spelKlaarNaDezeZet) {
       aaahhhGeluid.currentTime = 0;
