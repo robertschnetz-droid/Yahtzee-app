@@ -481,8 +481,6 @@ disabled={scoresBoven[i][k] !== ""}
         fontWeight: "bold",
         opacity: 1,
         WebkitTextFillColor: "white",
-appearance: "none",
-WebkitAppearance: "none",
         border: "2px solid #2fbf71",
       }
     : {}
@@ -539,7 +537,7 @@ WebkitAppearance: "none",
   }}
 >
   <option value="">-</option>
-  {Array.from({ length: 32 }, (_, n) => n + 5).map((waarde) => (
+  [5, 6, 7, 8, 9, 10].map((waarde) => (
     <option key={waarde} value={waarde}>
       {waarde}
     </option>
