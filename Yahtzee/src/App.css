@@ -222,6 +222,24 @@ select.filled {
   font-weight: bold;
 }
 
-.rij-klaar td {
-  background: red !important;
+@keyframes yahtzeePulse {
+  0% {
+    box-shadow: 0 0 0px #00ff88;
+    transform: scale(1);
+  }
+
+  50% {
+    box-shadow: 0 0 18px #00ff88;
+    transform: scale(1.08);
+  }
+
+  100% {
+    box-shadow: 0 0 0px #00ff88;
+    transform: scale(1);
+  }
+}
+
+.yahtzee-animation {
+  animation: yahtzeePulse 0.7s ease;
+  background: yellow !important;
 }
