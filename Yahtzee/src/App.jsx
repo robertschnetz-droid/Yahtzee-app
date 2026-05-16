@@ -512,6 +512,8 @@ opacity: 1,
       ? {
           backgroundColor: "#2fbf71",
           color: "white",
+          WebkitTextFillColor: "white",
+opacity: 1,
           fontWeight: "bold",
           border: "2px solid #2fbf71",
         }
