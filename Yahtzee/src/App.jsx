@@ -471,9 +471,11 @@ disabled={scoresBoven[i][k] !== ""}
   style={
   scoresOnder[i][k] !== ""
     ? {
-        backgroundColor: "red",
+        backgroundColor: "#2fbf71",
         color: "white",
         fontWeight: "bold",
+        WebkitTextFillColor: "white",
+opacity: 1,
         border: "2px solid #2fbf71",
       }
     : {}
