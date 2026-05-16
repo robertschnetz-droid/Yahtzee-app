@@ -464,7 +464,12 @@ disabled={scoresBoven[i][k] !== ""}
 </td>
 
                 {spellen.map((_, k) => (
-                  <td key={k}>
+                  <td
+  key={k}
+  style={{
+    opacity: scoresOnder[i].every((v) => v !== "") ? 0.35 : 1,
+  }}
+>
                     {cat.vast ? (
                       <select
   disabled={scoresOnder[i][k] !== ""}
