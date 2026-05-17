@@ -337,36 +337,43 @@ function App() {
   }
 
   if (!gestart) {
-    return (
-      <div className="startScherm">
+   return (
+      <div
+        className="startScherm"
+        style={{
+          background: "#101217",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "20px",
+        }}
+      >
         <button
-          className="startButton"
+          style={{
+            fontSize: "32px",
+            padding: "20px 40px",
+            borderRadius: "15px",
+            fontWeight: "bold",
+            cursor: "pointer",
+            background: "#f5c542",
+            color: "#101217",
+            border: "none",
+          }}
           onClick={() => {
-            speelGeluid(plingGeluid);
-            setStartDice(true);
-            setTimeout(() => {
-              setGestart(true);
-              sessionStorage.setItem("spelGestart", "true");
-            }, 1500);
+            setGestart(true);
+            sessionStorage.setItem("spelGestart", "true");
           }}
         >
           Start spel
         </button>
-
         <img
-  src="/icon.png"
-  alt="Logo"
-  className="startLogo"
-  style={{ width: "200px", marginTop: "20px" }}
-/>
-
-        {startDice && (
-          <div className="diceIntro">
-            {[1, 2, 3, 4, 5].map((d) => (
-              <span key={d}>🎲</span>
-            ))}
-          </div>
-        )}
+          src="/icon.png"
+          alt="Logo"
+          className="startLogo"
+          style={{ width: "200px", marginTop: "20px" }}
+        />
       </div>
     );
   }
