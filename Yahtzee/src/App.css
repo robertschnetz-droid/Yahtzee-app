@@ -239,5 +239,14 @@ select.filled {
   }
 }
 .yahtzeePulse {
-  animation: yahtzeePulse 0.6s ease;
+  animation: yahtzeePulse 1.2s ease;
+  background: red !important;
+}
+
+.floatingPopup {
+  position: fixed;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
 }

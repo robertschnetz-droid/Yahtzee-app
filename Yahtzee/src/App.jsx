@@ -571,7 +571,7 @@ function App() {
         </table>
       </div>
       {openMenu && (
-  <div className="scorePopup">
+  <div className="scorePopup floatingPopup">
         {["-", "0", "5", "10", "15", "20", "25"].map((waarde) => (
       <button
   key={waarde}
