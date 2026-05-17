@@ -573,7 +573,15 @@ function App() {
       {openMenu && (
   <div className="scorePopup">
         {["-", "0", "5", "10", "15", "20", "25"].map((waarde) => (
-      <button key={waarde} type="button">
+      <button
+  key={waarde}
+  type="button"
+  onClick={() => {
+    const [i, k] = openMenu.split("-");
+    setOnder(Number(i), Number(k), waarde);
+    setOpenMenu(null);
+  }}
+>
         {waarde}
       </button>
     ))}
