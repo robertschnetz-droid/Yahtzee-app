@@ -526,7 +526,11 @@ function App() {
                       ) : (
                         <button
   type="button"
-  className={scoresOnder[i][k] !== "" && scoresOnder[i][k] !== "-" ? "scoreButtonCustom filled" : "scoreButtonCustom"}
+  className={
+  scoresOnder[i][k] !== ""
+    ? "scoreButtonCustom filled"
+    : "scoreButtonCustom"
+}
   onClick={() => setOpenMenu(`${i}-${k}`)}
 >
   {scoresOnder[i][k] !== "" ? scoresOnder[i][k] : "-"}
@@ -568,12 +572,18 @@ function App() {
       </div>
       {openMenu && (
   <div className="scorePopup">
-    Menu open: {openMenu}
-    <button onClick={() => setOpenMenu(null)}>Sluiten</button>
+        {["-", "0", "5", "10", "15", "20", "25"].map((waarde) => (
+      <button key={waarde} type="button">
+        {waarde}
+      </button>
+    ))}
+
+    <button type="button" onClick={() => setOpenMenu(null)}>
+      Sluiten
+    </button>
   </div>
 )}
-    </div>
-  );
-}
+  </div>
+)}
 
 export default App;
