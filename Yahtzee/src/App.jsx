@@ -50,18 +50,12 @@ function spelKlaar(bovenData, onderData) {
   return bovenVol(bovenData) && onderVolVoorEinde(onderData);
 }
 
-function ingevuldStyle(isIngevuld, rijIsVol) {
-  return {
-    opacity: rijIsVol ? RIJ_FADE : 1,
-    ...(isIngevuld
-      ? {
-          backgroundColor: GROEN,
-          color: "white",
-          fontWeight: "bold",
-          border: `2px solid ${GROEN}`,
-        }
-      : {}),
-  };
+function clampPopup(left, top) {
+  const padding = 12;
+  const width = Math.min(360, window.innerWidth - padding * 2);
+  const x = Math.min(Math.max(left, padding + width / 2), window.innerWidth - padding - width / 2);
+  const y = Math.min(Math.max(top, 80), window.innerHeight - 110);
+  return { left: x, top: y, width };
 }
 
 function App() {
@@ -96,10 +90,16 @@ function App() {
     const data = localStorage.getItem("scoresOnder");
     return data ? JSON.parse(data) : onder.map(() => spellen.map(() => ""));
   });
-  const [pulseCel, setPulseCel] = useState("");
-  const [openMenu, setOpenMenu] = useState(null);
 
   const [naam, setNaam] = useState(() => localStorage.getItem("naam") || "");
+
+  const [scoreMenu, setScoreMenu] = useState(null);
+  const [bevestiging, setBevestiging] = useState(null);
+  const [melding, setMelding] = useState(null);
+  const [cellAnim, setCellAnim] = useState(null);
+  const [rowAnim, setRowAnim] = useState(null);
+  const [effect, setEffect] = useState(null);
+  const [startDice, setStartDice] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("scoresBoven", JSON.stringify(scoresBoven));
@@ -139,19 +139,40 @@ function App() {
     return nodig < 0 ? 0 : nodig;
   };
 
-  function nieuwSpel() {
-    if (!window.confirm("Nieuw spel starten?")) return;
+  function triggerCellAnim(type, deel, r, k) {
+    setCellAnim({ type, key: `${deel}-${r}-${k}` });
+    setTimeout(() => setCellAnim(null), type === "yahtzee" ? 2100 : 700);
+  }
 
-    speelGeluid(plingGeluid);
-    setScoresBoven(boven.map(() => spellen.map(() => "")));
-    setScoresOnder(onder.map(() => spellen.map(() => "")));
-    setBonusBehaald([false, false, false, false, false, false]);
-    setSadPlayed([false, false, false, false, false, false]);
+  function triggerRowAnim(deel, r) {
+    setRowAnim(`${deel}-${r}`);
+    setTimeout(() => setRowAnim(null), 1200);
+  }
+
+  function triggerEffect(type, text = "") {
+    setEffect({ type, text });
+    setTimeout(() => setEffect(null), 2200);
+  }
+
+  function bevestigNieuwSpel() {
+    setBevestiging({
+      titel: "Nieuw spel starten?",
+      tekst: "Alle scores worden gewist.",
+      okTekst: "Nieuw spel",
+      onOk: () => {
+        speelGeluid(plingGeluid);
+        setScoresBoven(boven.map(() => spellen.map(() => "")));
+        setScoresOnder(onder.map(() => spellen.map(() => "")));
+        setBonusBehaald([false, false, false, false, false, false]);
+        setSadPlayed([false, false, false, false, false, false]);
+      },
+    });
   }
 
   function speelFinishedOf(geluid, bovenData, onderData) {
     if (spelKlaar(bovenData, onderData)) {
       speelGeluid(finishedGeluid);
+      triggerEffect("finished", "Spel klaar!");
       return true;
     }
 
@@ -180,12 +201,16 @@ function App() {
     const waarde = v === "" ? "" : Number(v);
 
     if (waarde !== "" && isYahtzeeScoreBoven(r, waarde) && yahtzeeVakOpen(k)) {
-      window.alert("Je hebt Yahtzee gegooid. Vul eerst het Yahtzee-vak in.");
+      setMelding({
+        titel: "Yahtzee gegooid",
+        tekst: "Vul eerst het Yahtzee-vak in.",
+      });
       return;
     }
 
     const bovenKopie = scoresBoven.map((x) => [...x]);
     const onderKopie = scoresOnder.map((x) => [...x]);
+    const wasRijVol = rijVol(bovenKopie[r]);
 
     bovenKopie[r][k] = waarde;
     vulYahtzeeBonusAlsNodig(onderKopie, r, k, waarde);
@@ -193,8 +218,12 @@ function App() {
     setScoresBoven(bovenKopie);
     setScoresOnder(onderKopie);
 
+    triggerCellAnim(waarde === 0 ? "zero" : "pulse", "boven", r, k);
+    if (!wasRijVol && rijVol(bovenKopie[r])) triggerRowAnim("boven", r);
+
     if (spelKlaar(bovenKopie, onderKopie)) {
       speelGeluid(finishedGeluid);
+      triggerEffect("finished", "Spel klaar!");
       return;
     }
 
@@ -210,6 +239,7 @@ function App() {
 
     if (nieuwTotaal >= 63 && !bonusBehaald[k]) {
       speelGeluid(bonusGeluid);
+      triggerEffect("bonus", "Bonus gehaald 🎉");
       setBonusBehaald((prev) => {
         const nieuw = [...prev];
         nieuw[k] = true;
@@ -219,6 +249,7 @@ function App() {
 
     if (bovenCompleet && nieuwTotaal < 63 && !sadPlayed[k]) {
       speelGeluid(sadTrombone);
+      triggerEffect("sad", "pweh pweh pppwwwweeeeehhhhhh");
       setSadPlayed((prev) => {
         const nieuw = [...prev];
         nieuw[k] = true;
@@ -228,16 +259,22 @@ function App() {
   }
 
   function setOnder(r, k, v) {
-    const value = v.replace(/[^0-9]/g, "");
-    const waarde = value === "" ? "" : Number(value);
+    const waarde = v === "" ? "" : Number(v);
 
     const onderKopie = scoresOnder.map((x) => [...x]);
+    const wasRijVol = rijVol(onderKopie[r]);
     onderKopie[r][k] = waarde;
 
     setScoresOnder(onderKopie);
 
+    const isYahtzee = r === YAHTZEE_INDEX && waarde > 0;
+    const animType = waarde === 0 ? "zero" : isYahtzee ? "yahtzee" : "pulse";
+    triggerCellAnim(animType, "onder", r, k);
+    if (!wasRijVol && rijVol(onderKopie[r])) triggerRowAnim("onder", r);
+
     if (spelKlaar(scoresBoven, onderKopie)) {
       speelGeluid(finishedGeluid);
+      triggerEffect("finished", "Spel klaar!");
       return;
     }
 
@@ -246,352 +283,711 @@ function App() {
       return;
     }
 
-    if (r === YAHTZEE_INDEX && waarde > 0) {
+    if (isYahtzee) {
       speelGeluid(yahtzeeGeluid);
+      triggerEffect("yahtzee", "YAHTZEE!");
     }
+  }
+
+  function openScoreMenu(event, deel, r, k, opties, label) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const pos = clampPopup(rect.left + rect.width / 2, rect.bottom + 10);
+    setScoreMenu({ deel, r, k, opties, label, pos });
+  }
+
+  function kiesScore(waarde) {
+    if (!scoreMenu) return;
+
+    if (waarde === "cancel") {
+      setScoreMenu(null);
+      return;
+    }
+
+    const actie = { ...scoreMenu, waarde };
+    setScoreMenu(null);
+    setBevestiging({
+      titel: "Weet je het zeker?",
+      tekst: `${actie.label}: ${waarde === "" ? "-" : waarde}`,
+      okTekst: "OK",
+      onOk: () => {
+        if (actie.deel === "boven") setBoven(actie.r, actie.k, waarde);
+        if (actie.deel === "onder") setOnder(actie.r, actie.k, waarde);
+      },
+    });
+  }
+
+  function optiesBoven(r) {
+    return ["", "0", ...Array.from({ length: 5 }, (_, n) => String((n + 1) * (r + 1)))];
+  }
+
+  function optiesOnder(cat) {
+    if (cat.vast) return ["", "0", String(cat.vast)];
+    return ["", "0", ...Array.from({ length: 32 }, (_, n) => String(n + 5))];
+  }
+
+  function scoreButtonClass(isIngevuld, animKey) {
+    const classes = ["scoreButton"];
+    if (isIngevuld) classes.push("filled");
+    if (cellAnim?.key === animKey) classes.push(cellAnim.type);
+    return classes.join(" ");
+  }
+
+  function rijClass(deel, index) {
+    return rowAnim === `${deel}-${index}` ? "rowComplete" : "";
   }
 
   if (!gestart) {
     return (
-      <div
-        className="startScherm"
-        style={{
-          background: "#101217",
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "20px",
-        }}
-      >
+      <div className="startScherm">
         <button
-          style={{
-            fontSize: "32px",
-            padding: "20px 40px",
-            borderRadius: "15px",
-            fontWeight: "bold",
-            cursor: "pointer",
-            background: "#f5c542",
-            color: "#101217",
-            border: "none",
-          }}
+          className="startButton"
           onClick={() => {
-            setGestart(true);
-            sessionStorage.setItem("spelGestart", "true");
+            speelGeluid(plingGeluid);
+            setStartDice(true);
+            setTimeout(() => {
+              setGestart(true);
+              sessionStorage.setItem("spelGestart", "true");
+            }, 1500);
           }}
         >
           Start spel
         </button>
-        <img
-          src="/icon.png"
-          alt="Logo"
-          className="startLogo"
-          style={{ width: "200px", marginTop: "20px" }}
-        />
+
+        <img src="/icon.png" alt="Logo" className="startLogo" />
+
+        {startDice && (
+          <div className="diceIntro">
+            {[1, 2, 3, 4, 5].map((d) => (
+              <span key={d}>🎲</span>
+            ))}
+          </div>
+        )}
       </div>
     );
   }
 
   return (
-    <div className="app">
-      <style>{`
-        * { box-sizing: border-box; }
+    <>
+      <div className="app">
+        <style>{`
+          * { box-sizing: border-box; }
 
-        .app {
-          min-height: 100vh;
-          background: #101217;
-          color: #f5f5f5;
-          font-family: Arial, sans-serif;
-          padding: 16px;
-        }
+          .app {
+            min-height: 100vh;
+            background: #101217;
+            color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            padding: 16px;
+          }
 
-        .startScherm {
-          background: #101217;
-          min-height: 100vh;
-        }
+          .startScherm {
+            background: #101217;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            overflow: hidden;
+          }
 
-        h1 {
-          text-align: center;
-          margin: 6px 0 12px;
-          font-size: 40px;
-        }
+          .startButton {
+            font-size: 32px;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #f5c542;
+            color: #101217;
+            border: none;
+            animation: softFloat 2s infinite ease-in-out;
+          }
 
-        .topbar {
-          display: flex;
-          justify-content: center;
-          gap: 10px;
-          margin-bottom: 14px;
-        }
+          .startLogo {
+            width: 200px;
+            margin-top: 20px;
+          }
 
-        button {
-          background: #168a5a;
-          color: white;
-          border: none;
-          padding: 7px 13px;
-          border-radius: 7px;
-          font-weight: bold;
-          cursor: pointer;
-        }
+          .diceIntro {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            pointer-events: none;
+            z-index: 9999;
+          }
 
-        input, select {
-          background: #252a33;
-          color: white;
-          border: 1px solid #5c6575;
-          border-radius: 5px;
-          padding: 4px;
-          text-align: center;
-        }
+          .diceIntro span {
+            font-size: 42px;
+            animation: rollDice 1.5s ease-in-out both;
+          }
 
-        input { width: 50px; }
-        select { width: 58px; }
-        .nameInput { width: 160px; }
+          .diceIntro span:nth-child(2) { animation-delay: 0.08s; }
+          .diceIntro span:nth-child(3) { animation-delay: 0.16s; }
+          .diceIntro span:nth-child(4) { animation-delay: 0.24s; }
+          .diceIntro span:nth-child(5) { animation-delay: 0.32s; }
 
-        .tableWrap {
-          overflow-x: auto;
-          max-width: 1000px;
-          margin: 0 auto;
-          border-radius: 10px;
-        }
+          .topbar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 14px;
+          }
 
-        table {
-          width: 100%;
-          min-width: 760px;
-          border-collapse: collapse;
-          background: #1b1f27;
-        }
+          button {
+            background: #168a5a;
+            color: white;
+            border: none;
+            padding: 7px 13px;
+            border-radius: 7px;
+            font-weight: bold;
+            cursor: pointer;
+          }
 
-        th {
-          background: #273447;
-          color: white;
-          padding: 9px;
-        }
+          input {
+            background: #252a33;
+            color: white;
+            border: 1px solid #5c6575;
+            border-radius: 5px;
+            padding: 4px;
+            text-align: center;
+          }
 
-        td {
-          padding: 6px;
-          text-align: center;
-          border-bottom: 1px solid #303744;
-        }
+          .nameInput { width: 160px; }
 
-        td:first-child {
-          font-weight: bold;
-          width: 150px;
-        }
+          .tableWrap {
+            overflow-x: auto;
+            max-width: 1000px;
+            margin: 0 auto;
+            border-radius: 10px;
+          }
 
-        .total {
-          background: #273447;
-          color: white;
-          font-weight: bold;
-        }
+          table {
+            width: 100%;
+            min-width: 760px;
+            border-collapse: collapse;
+            background: #1b1f27;
+          }
 
-        .grand {
-          background: #8b1e1e;
-          color: white;
-          font-weight: bold;
-          font-size: 18px;
-        }
-      `}</style>
+          th {
+            background: #273447;
+            color: white;
+            padding: 9px;
+          }
 
-      <div className="topbar">
-        <button onClick={nieuwSpel}>Nieuw spel</button>
-        <input
-          className="nameInput"
-          value={naam}
-          onChange={(e) => setNaam(e.target.value)}
-          placeholder="Naam speler"
-          enterKeyHint="done"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") e.target.blur();
+          td {
+            padding: 6px;
+            text-align: center;
+            border-bottom: 1px solid #303744;
+          }
+
+          td:first-child {
+            font-weight: bold;
+            width: 150px;
+          }
+
+          .total {
+            background: #273447;
+            color: white;
+            font-weight: bold;
+          }
+
+          .grand {
+            background: #8b1e1e;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+          }
+
+          .scoreButton {
+            min-width: 58px;
+            height: 34px;
+            background: #252a33;
+            color: white;
+            border: 1px solid #5c6575;
+            border-radius: 7px;
+            padding: 4px 8px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+          }
+
+          .scoreButton.filled {
+            background: ${GROEN};
+            color: white;
+            font-weight: bold;
+            border: 2px solid ${GROEN};
+          }
+
+          .scoreButton:disabled {
+            opacity: 0.95;
+            cursor: default;
+          }
+
+          .scoreButton.pulse {
+            animation: cellPulse 0.65s ease;
+          }
+
+          .scoreButton.zero {
+            animation: zeroShake 0.65s ease;
+          }
+
+          .scoreButton.yahtzee {
+            animation: yahtzeeJackpot 2s ease;
+          }
+
+          .autoScore {
+            display: inline-block;
+            min-width: 58px;
+          }
+
+          .rowComplete {
+            animation: rowShine 1.1s ease;
+          }
+
+          .scoreMenu {
+            position: fixed;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            background: #111827;
+            padding: 10px;
+            border-radius: 14px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.55);
+            z-index: 9999;
+            transform: translateX(-50%);
+            animation: menuIn 0.18s ease;
+          }
+
+          .scoreMenu button {
+            min-width: 44px;
+            background: #168a5a;
+          }
+
+          .modalBackdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.58);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            z-index: 10000;
+          }
+
+          .modalBox {
+            width: min(420px, 100%);
+            background: #111827;
+            color: white;
+            border: 1px solid #2d3748;
+            border-radius: 18px;
+            padding: 20px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+            animation: modalIn 0.2s ease;
+          }
+
+          .modalBox h2 {
+            margin: 0 0 10px;
+            font-size: 24px;
+          }
+
+          .modalBox p {
+            margin: 0 0 18px;
+            color: #d8dee9;
+            line-height: 1.4;
+          }
+
+          .modalActions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+          }
+
+          .cancelButton {
+            background: #374151;
+          }
+
+          .effectOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            font-size: clamp(34px, 8vw, 82px);
+            font-weight: 900;
+            text-align: center;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.65);
+          }
+
+          .effectOverlay.bonus {
+            animation: confettiFade 2.2s ease both;
+          }
+
+          .effectOverlay.bonus::before,
+          .effectOverlay.bonus::after {
+            content: "🎉 🎊 ✨ 🎉 🎊";
+            position: absolute;
+            top: 15%;
+            left: 0;
+            right: 0;
+            font-size: 34px;
+            animation: confettiFall 2.1s ease both;
+          }
+
+          .effectOverlay.bonus::after {
+            top: 35%;
+            animation-delay: 0.25s;
+          }
+
+          .effectOverlay.sad {
+            color: #ff6262;
+            animation: dramaIn 2.2s ease both;
+          }
+
+          .effectOverlay.yahtzee {
+            color: #ffd166;
+            animation: yahtzeeOverlay 2.2s ease both;
+          }
+
+          .effectOverlay.yahtzee::after {
+            content: "🎲 🎲 🎲 🎲 🎲";
+            position: absolute;
+            top: 60%;
+            font-size: 42px;
+            animation: diceBurst 2s ease both;
+          }
+
+          .effectOverlay.finished {
+            color: #ffffff;
+            animation: finishedSweep 2.2s ease both;
+          }
+
+          @keyframes softFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+          }
+
+          @keyframes rollDice {
+            0% { transform: translateX(-120vw) rotate(0deg) scale(0.7); opacity: 0; }
+            60% { opacity: 1; }
+            85% { transform: translateX(10px) rotate(680deg) scale(1.15); }
+            100% { transform: translateX(0) rotate(720deg) scale(1); opacity: 0; }
+          }
+
+          @keyframes menuIn {
+            from { opacity: 0; transform: translateX(-50%) translateY(-8px) scale(0.96); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+          }
+
+          @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.94); }
+            to { opacity: 1; transform: scale(1); }
+          }
+
+          @keyframes cellPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(47,191,113,0); }
+            50% { transform: scale(1.14); box-shadow: 0 0 22px rgba(47,191,113,0.95); }
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(47,191,113,0); }
+          }
+
+          @keyframes zeroShake {
+            0%, 100% { transform: translateX(0); background: ${GROEN}; }
+            15% { transform: translateX(-6px); background: #b91c1c; }
+            30% { transform: translateX(6px); background: #b91c1c; }
+            45% { transform: translateX(-5px); }
+            60% { transform: translateX(5px); }
+            75% { transform: translateX(-3px); }
+          }
+
+          @keyframes yahtzeeJackpot {
+            0% { transform: scale(1); box-shadow: 0 0 0 rgba(255,209,102,0); }
+            25% { transform: scale(1.2) rotate(-2deg); box-shadow: 0 0 26px rgba(255,209,102,1); }
+            50% { transform: scale(1.12) rotate(2deg); box-shadow: 0 0 34px rgba(255,255,255,0.9); }
+            75% { transform: scale(1.18); box-shadow: 0 0 30px rgba(255,209,102,1); }
+            100% { transform: scale(1); box-shadow: 0 0 0 rgba(255,209,102,0); }
+          }
+
+          @keyframes rowShine {
+            0% { filter: brightness(1); }
+            35% { filter: brightness(1.8); }
+            100% { filter: brightness(1); }
+          }
+
+          @keyframes confettiFade {
+            0% { opacity: 0; transform: scale(0.8); }
+            20% { opacity: 1; transform: scale(1.05); }
+            85% { opacity: 1; }
+            100% { opacity: 0; transform: scale(1); }
+          }
+
+          @keyframes confettiFall {
+            from { transform: translateY(-80px); opacity: 0; }
+            20% { opacity: 1; }
+            to { transform: translateY(220px); opacity: 0; }
+          }
+
+          @keyframes dramaIn {
+            0% { opacity: 0; transform: translateY(-20px) scale(0.9); }
+            20% { opacity: 1; transform: translateY(0) scale(1); }
+            45% { transform: rotate(-2deg); }
+            65% { transform: rotate(2deg); }
+            100% { opacity: 0; transform: translateY(20px) scale(0.98); }
+          }
+
+          @keyframes yahtzeeOverlay {
+            0% { opacity: 0; transform: scale(0.7); }
+            20% { opacity: 1; transform: scale(1.1); }
+            75% { opacity: 1; }
+            100% { opacity: 0; transform: scale(1); }
+          }
+
+          @keyframes diceBurst {
+            0% { transform: translateY(40px) scale(0.7); opacity: 0; }
+            25% { opacity: 1; }
+            70% { opacity: 1; transform: translateY(0) scale(1.1); }
+            100% { opacity: 0; transform: translateY(-20px) scale(0.9); }
+          }
+
+          @keyframes finishedSweep {
+            0% { opacity: 0; transform: scale(0.85); }
+            20% { opacity: 1; transform: scale(1); }
+            80% { opacity: 1; }
+            100% { opacity: 0; transform: scale(1.05); }
+          }
+        `}</style>
+
+        <div className="topbar">
+          <button onClick={bevestigNieuwSpel}>Nieuw spel</button>
+          <input
+            className="nameInput"
+            value={naam}
+            onChange={(e) => setNaam(e.target.value)}
+            placeholder="Naam speler"
+            enterKeyHint="done"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.target.blur();
+            }}
+          />
+        </div>
+
+        <div className="tableWrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Categorie</th>
+                {spellen.map((s) => (
+                  <th key={s}>Spel {s}</th>
+                ))}
+              </tr>
+            </thead>
+
+            <tbody>
+              {boven.map((cat, i) => {
+                const rijIsVol = rijVol(scoresBoven[i]);
+
+                return (
+                  <tr key={cat} className={rijClass("boven", i)}>
+                    <td style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>{cat}</td>
+
+                    {spellen.map((_, k) => {
+                      const isIngevuld = scoresBoven[i][k] !== "";
+                      const animKey = `boven-${i}-${k}`;
+
+                      return (
+                        <td key={k} style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>
+                          <button
+                            type="button"
+                            className={scoreButtonClass(isIngevuld, animKey)}
+                            disabled={isIngevuld}
+                            onClick={(e) =>
+                              openScoreMenu(e, "boven", i, k, optiesBoven(i), cat)
+                            }
+                          >
+                            {isIngevuld ? scoresBoven[i][k] : "-"}
+                          </button>
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+
+              <tr className="total">
+                <td>Totaal</td>
+                {spellen.map((_, k) => (
+                  <td key={k}>{totaal(k)}</td>
+                ))}
+              </tr>
+
+              <tr className="total">
+                <td>Punten tot bonus</td>
+                {spellen.map((_, k) => (
+                  <td
+                    key={k}
+                    style={{
+                      color: totaal(k) >= 63 ? "lightgreen" : "red",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {bonusNogNodig(k)}
+                  </td>
+                ))}
+              </tr>
+
+              <tr>
+                <td><b>Bonus</b></td>
+                {spellen.map((_, k) => (
+                  <td key={k}>{bonus(k)}</td>
+                ))}
+              </tr>
+
+              <tr className="total">
+                <td>Totaal boven</td>
+                {spellen.map((_, k) => (
+                  <td key={k}>{totaalBoven(k)}</td>
+                ))}
+              </tr>
+
+              {onder.map((cat, i) => {
+                const rijIsVol = rijVol(scoresOnder[i]);
+
+                return (
+                  <tr key={cat.naam} className={rijClass("onder", i)}>
+                    <td style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>{cat.naam}</td>
+
+                    {spellen.map((_, k) => {
+                      const isIngevuld = scoresOnder[i][k] !== "";
+                      const animKey = `onder-${i}-${k}`;
+
+                      return (
+                        <td key={k} style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>
+                          {cat.automatisch ? (
+                            <span
+                              className="autoScore"
+                              style={{
+                                opacity: rijIsVol ? RIJ_FADE : 1,
+                                fontWeight: isIngevuld ? "bold" : "normal",
+                                color: isIngevuld ? "lightgreen" : "white",
+                              }}
+                            >
+                              {isIngevuld ? scoresOnder[i][k] : "-"}
+                            </span>
+                          ) : (
+                            <button
+                              type="button"
+                              className={scoreButtonClass(isIngevuld, animKey)}
+                              disabled={isIngevuld}
+                              onClick={(e) =>
+                                openScoreMenu(e, "onder", i, k, optiesOnder(cat), cat.naam)
+                              }
+                            >
+                              {isIngevuld ? scoresOnder[i][k] : "-"}
+                            </button>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+
+              <tr className="total">
+                <td>Totaal onder</td>
+                {spellen.map((_, k) => (
+                  <td key={k}>{totaalOnder(k)}</td>
+                ))}
+              </tr>
+
+              <tr className="total">
+                <td>Totaal boven</td>
+                {spellen.map((_, k) => (
+                  <td key={k}>{totaalBoven(k)}</td>
+                ))}
+              </tr>
+
+              <tr className="total">
+                <td>Eind totaal</td>
+                {spellen.map((_, k) => (
+                  <td key={k}>{eind(k)}</td>
+                ))}
+              </tr>
+
+              <tr className="grand">
+                <td>Grand totaal</td>
+                <td colSpan="6">{grand()}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {scoreMenu && (
+        <div
+          className="scoreMenu"
+          style={{
+            left: `${scoreMenu.pos.left}px`,
+            top: `${scoreMenu.pos.top}px`,
+            width: `${scoreMenu.pos.width}px`,
           }}
-        />
-      </div>
+        >
+          {scoreMenu.opties.map((waarde) => (
+            <button key={waarde || "leeg"} type="button" onClick={() => kiesScore(waarde)}>
+              {waarde === "" ? "-" : waarde}
+            </button>
+          ))}
+          <button type="button" onClick={() => kiesScore("cancel")}>Sluiten</button>
+        </div>
+      )}
 
-      <div className="tableWrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Categorie</th>
-              {spellen.map((s) => (
-                <th key={s}>Spel {s}</th>
-              ))}
-            </tr>
-          </thead>
+      {bevestiging && (
+        <div className="modalBackdrop">
+          <div className="modalBox">
+            <h2>{bevestiging.titel}</h2>
+            <p>{bevestiging.tekst}</p>
+            <div className="modalActions">
+              <button
+                type="button"
+                className="cancelButton"
+                onClick={() => setBevestiging(null)}
+              >
+                Annuleren
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const actie = bevestiging.onOk;
+                  setBevestiging(null);
+                  actie();
+                }}
+              >
+                {bevestiging.okTekst || "OK"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-          <tbody>
-            {boven.map((cat, i) => {
-              const rijIsVol = rijVol(scoresBoven[i]);
+      {melding && (
+        <div className="modalBackdrop">
+          <div className="modalBox">
+            <h2>{melding.titel}</h2>
+            <p>{melding.tekst}</p>
+            <div className="modalActions">
+              <button type="button" onClick={() => setMelding(null)}>OK</button>
+            </div>
+          </div>
+        </div>
+      )}
 
-              return (
-                <tr key={cat}>
-                  <td style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>{cat}</td>
-
-                  {spellen.map((_, k) => (
-                    <td key={k}>
-                      <select
-                        style={ingevuldStyle(scoresBoven[i][k] !== "", rijIsVol)}
-                        disabled={scoresBoven[i][k] !== ""}
-                        value={scoresBoven[i][k]}
-                        onChange={(e) => {
-                          if (!window.confirm("Weet je het zeker?")) return;
-                          if (e.target.value === "cancel") {
-                            e.target.blur();
-                            return;
-                          }
-
-                          setBoven(i, k, e.target.value);
-                          e.target.blur();
-                        }}
-                      >
-                        <option disabled>{cat}</option>
-                        <option value="">-</option>
-                        <option value="0">0</option>
-
-                        {Array.from({ length: 5 }, (_, n) => (n + 1) * (i + 1)).map(
-                          (waarde) => (
-                            <option key={waarde} value={waarde}>
-                              {waarde}
-                            </option>
-                          )
-                        )}
-
-                        <option value="cancel">Annuleren</option>
-                      </select>
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-
-            <tr className="total">
-              <td>Totaal</td>
-              {spellen.map((_, k) => (
-                <td key={k}>{totaal(k)}</td>
-              ))}
-            </tr>
-
-            <tr className="total">
-              <td>Punten tot bonus</td>
-              {spellen.map((_, k) => (
-                <td
-                  key={k}
-                  style={{
-                    color: totaal(k) >= 63 ? "lightgreen" : "red",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {bonusNogNodig(k)}
-                </td>
-              ))}
-            </tr>
-
-            <tr>
-              <td><b>Bonus</b></td>
-              {spellen.map((_, k) => (
-                <td key={k}>{bonus(k)}</td>
-              ))}
-            </tr>
-
-            <tr className="total">
-              <td>Totaal boven</td>
-              {spellen.map((_, k) => (
-                <td key={k}>{totaalBoven(k)}</td>
-              ))}
-            </tr>
-
-            {onder.map((cat, i) => {
-              const rijIsVol = rijVol(scoresOnder[i]);
-
-              return (
-                <tr key={cat.naam}>
-                  <td style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>{cat.naam}</td>
-
-                  {spellen.map((_, k) => (
-                    <td
-  key={k}
-  className={pulseCel === `${i}-${k}` ? "yahtzeePulse" : ""}
-  onClick={() => setOpenMenu(`${i}-${k}`)}
->
-                      {cat.automatisch ? (
-                        <span
-                          style={{
-                            display: "inline-block",
-                            minWidth: "58px",
-                            opacity: rijIsVol ? RIJ_FADE : 1,
-                            fontWeight: scoresOnder[i][k] !== "" ? "bold" : "normal",
-                            color: scoresOnder[i][k] !== "" ? "lightgreen" : "white",
-                          }}
-                        >
-                          {scoresOnder[i][k] === "" ? "-" : scoresOnder[i][k]}
-                        </span>
-                      ) : (
-                        <button
-  type="button"
-  className={
-  scoresOnder[i][k] !== ""
-    ? "scoreButtonCustom filled"
-    : "scoreButtonCustom"
+      {effect && (
+        <div className={`effectOverlay ${effect.type}`}>
+          {effect.text}
+        </div>
+      )}
+    </>
+  );
 }
-  onClick={() => setOpenMenu(`${i}-${k}`)}
->
-  {scoresOnder[i][k] !== "" ? scoresOnder[i][k] : "-"}
-</button>
-                                              )}
-                    </td>
-                  ))}
-                </tr>
-              );
-            })}
-
-            <tr className="total">
-              <td>Totaal onder</td>
-              {spellen.map((_, k) => (
-                <td key={k}>{totaalOnder(k)}</td>
-              ))}
-            </tr>
-
-            <tr className="total">
-              <td>Totaal boven</td>
-              {spellen.map((_, k) => (
-                <td key={k}>{totaalBoven(k)}</td>
-              ))}
-            </tr>
-
-            <tr className="total">
-              <td>Eind totaal</td>
-              {spellen.map((_, k) => (
-                <td key={k}>{eind(k)}</td>
-              ))}
-            </tr>
-
-            <tr className="grand">
-              <td>Grand totaal</td>
-              <td colSpan="6">{grand()}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      {openMenu && (
-  <div className="scorePopup floatingPopup">
-        {["-", "0", "5", "10", "15", "20", "25"].map((waarde) => (
-      <button
-  key={waarde}
-  type="button"
-  onClick={() => {
-    const [i, k] = openMenu.split("-");
-    setOnder(Number(i), Number(k), waarde);
-    setOpenMenu(null);
-  }}
->
-        {waarde}
-      </button>
-    ))}
-
-    <button type="button" onClick={() => setOpenMenu(null)}>
-      Sluiten
-    </button>
-  </div>
-)}
-  </div>
-)}
 
 export default App;
