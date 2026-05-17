@@ -524,46 +524,14 @@ function App() {
                           {scoresOnder[i][k] === "" ? "-" : scoresOnder[i][k]}
                         </span>
                       ) : (
-                        <select
-className="scoreSelect"
-                          style={ingevuldStyle(scoresOnder[i][k] !== "", rijIsVol)}
-                          disabled={false}
-                          value={scoresOnder[i][k]}
-                          onChange={(e) => {
-                            if (scoresOnder[i][k] !== "") {
-  return;
-}
-                            if (!window.confirm("Weet je het zeker?")) return;
-                            if (e.target.value === "cancel") {
-                              e.target.blur();
-                              return;
-                            }
-
-                            setOnder(i, k, e.target.value);
-                            setPulseCel(`${i}-${k}`);
-setTimeout(() => setPulseCel(""), 600);
-                            e.target.blur();
-                          }}
-                        >
-                          <option disabled>{cat.naam}</option>
-                          <option value="">-</option>
-                          <option value="0">0</option>
-
-                          {cat.vast ? (
-                            <option value={cat.vast}>{cat.vast}</option>
-                          ) : (
-                            Array.from({ length: 32 }, (_, n) => n + 5).map(
-                              (waarde) => (
-                                <option key={waarde} value={waarde}>
-                                  {waarde}
-                                </option>
-                              )
-                            )
-                          )}
-
-                          <option value="cancel">Annuleren</option>
-                        </select>
-                      )}
+                        <button
+  type="button"
+  className="scoreButtonCustom"
+  onClick={() => setOpenMenu(`${i}-${k}`)}
+>
+  {scoresOnder[i][k] !== "" ? scoresOnder[i][k] : "-"}
+</button>
+                                              )}
                     </td>
                   ))}
                 </tr>
