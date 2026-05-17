@@ -97,6 +97,7 @@ function App() {
     return data ? JSON.parse(data) : onder.map(() => spellen.map(() => ""));
   });
   const [pulseCel, setPulseCel] = useState("");
+  const [openMenu, setOpenMenu] = useState(null);
 
   const [naam, setNaam] = useState(() => localStorage.getItem("naam") || "");
 
@@ -508,6 +509,7 @@ function App() {
                     <td
   key={k}
   className={pulseCel === `${i}-${k}` ? "yahtzeePulse" : ""}
+  onClick={() => setOpenMenu(`${i}-${k}`)}
 >
                       {cat.automatisch ? (
                         <span
