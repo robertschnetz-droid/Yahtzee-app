@@ -246,3 +246,7 @@ select.filled {
 .scoreSelect:hover {
   transform: scale(1.05);
 }
+
+.scoreSelect:focus {
+  transform: scale(1.08);
+}
