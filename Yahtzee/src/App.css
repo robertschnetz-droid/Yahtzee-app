@@ -238,3 +238,11 @@ select.filled {
     transform: scale(1);
   }
 }
+
+.scoreSelect {
+  transition: all 0.25s ease;
+}
+
+.scoreSelect:hover {
+  transform: scale(1.05);
+}
