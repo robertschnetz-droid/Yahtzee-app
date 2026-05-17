@@ -266,6 +266,11 @@ select.filled {
   animation: diceRoll 0.5s linear infinite;
 }
 
+.diceIntro img {
+  width: 180px;
+  height: auto;
+}
+
 @keyframes diceRoll {
   0% {
     transform: rotate(0deg) translateY(0px) scale(1);
