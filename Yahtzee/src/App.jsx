@@ -500,19 +500,21 @@ function App() {
               const rijIsVol = rijVol(scoresOnder[i]);
 
               return (
-                <tr key={cat.naam}>
-                  <td style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>{cat.naam}</td>
-
-                  {spellen.map((_, k) => (
-                    <td
-  key={k}
+                <tr
+  key={cat.naam}
   className={
     cat.naam === "Yahtzee" &&
-    scoresOnder[i][k] === 50
-      ? "yahtzee-animation"
+    scoresOnder[i].includes(50)
+      ? "yahtzee-row-animation"
+      : scoresOnder[i].every((v) => v !== "")
+      ? "rij-klaar"
       : ""
   }
 >
+                  <td style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>{cat.naam}</td>
+
+                  {spellen.map((_, k) => (
+                    <td key={k}>
                       {cat.automatisch ? (
                         <span
                           style={{
