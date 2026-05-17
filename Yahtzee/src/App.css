@@ -298,6 +298,8 @@ select.filled {
 }
 
 .scoreMenu {
+  display: flex;
+  flex-wrap: wrap;
   max-height: 35vh;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
