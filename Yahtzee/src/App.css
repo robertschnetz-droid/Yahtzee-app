@@ -251,7 +251,7 @@ select.filled {
   border-radius: 14px;
   box-shadow: 0 8px 30px rgba(0,0,0,0.45);
 
-  max-height: 45vh;
+  max-height: 35vh;
   overflow-y: auto;
 }
 
