@@ -245,6 +245,7 @@ select.filled {
 
 .scorePopup {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
   background: #111827;
   padding: 8px;
@@ -252,7 +253,7 @@ select.filled {
   box-shadow: 0 8px 30px rgba(0,0,0,0.45);
 
   max-height: 35vh;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 .floatingPopup {
