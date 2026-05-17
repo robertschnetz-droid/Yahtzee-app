@@ -86,6 +86,7 @@ function App() {
     false,
     false,
   ]);
+  const [animatie, setAnimatie] = useState(null);
 
   const [scoresBoven, setScoresBoven] = useState(() => {
     const data = localStorage.getItem("scoresBoven");
@@ -503,13 +504,12 @@ function App() {
                 <tr
   key={cat.naam}
   className={
-    cat.naam === "Yahtzee" &&
-    scoresOnder[i].includes(50)
-      ? "yahtzee-row-animation"
-      : scoresOnder[i].every((v) => v !== "")
-      ? "rij-klaar"
-      : ""
-  }
+  animatie === `yahtzee-${k}`
+    ? "yahtzee-row-animation"
+    : scoresOnder[i].every((v) => v !== "")
+    ? "rij-klaar"
+    : ""
+}
 >
                   <td style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>{cat.naam}</td>
 
@@ -540,6 +540,14 @@ function App() {
                             }
 
                             setOnder(i, k, e.target.value);
+
+if (cat.naam === "Yahtzee" && e.target.value === "50") {
+  setAnimatie(`yahtzee-${k}`);
+
+  setTimeout(() => {
+    setAnimatie(null);
+  }, 800);
+}
                             e.target.blur();
                           }}
                         >
