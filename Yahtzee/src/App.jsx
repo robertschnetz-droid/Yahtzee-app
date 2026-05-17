@@ -526,7 +526,7 @@ function App() {
                       ) : (
                         <button
   type="button"
-  className={scoresOnder[i][k] !== "" ? "scoreButtonCustom filled" : "scoreButtonCustom"}
+  className={scoresOnder[i][k] !== "" && scoresOnder[i][k] !== "-" ? "scoreButtonCustom filled" : "scoreButtonCustom"}
   onClick={() => setOpenMenu(`${i}-${k}`)}
 >
   {scoresOnder[i][k] !== "" ? scoresOnder[i][k] : "-"}
