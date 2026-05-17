@@ -504,7 +504,7 @@ function App() {
                 <tr
   key={cat.naam}
   className={
-  animatie === `yahtzee-${k}`
+  animatie === `yahtzee-${i}`
     ? "yahtzee-row-animation"
     : scoresOnder[i].every((v) => v !== "")
     ? "rij-klaar"
@@ -542,7 +542,7 @@ function App() {
                             setOnder(i, k, e.target.value);
 
 if (cat.naam === "Yahtzee" && e.target.value === "50") {
-  setAnimatie(`yahtzee-${k}`);
+  setAnimatie(`yahtzee-${i}`);
 
   setTimeout(() => {
     setAnimatie(null);
