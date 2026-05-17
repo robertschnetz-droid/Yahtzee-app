@@ -184,7 +184,7 @@
 }
 
 .startScherm button {
-  font-size: 32px;
+  font-size: 26px;
   padding: 20px 40px;
   border-radius: 15px;
   font-weight: bold;
@@ -192,7 +192,9 @@
 }
 
 .startLogo {
-  width: 200px;
+  width: 180px;
+max-width: 80%;
+height: auto;
   margin-top: 20px;
 }
 
