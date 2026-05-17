@@ -238,15 +238,6 @@ select.filled {
     transform: scale(1);
   }
 }
-
-.scoreSelect {
-  transition: all 0.25s ease;
-}
-
-.scoreSelect:hover {
-  transform: scale(1.05);
-}
-
-.scoreSelect:focus {
-  transform: scale(1.08);
+.yahtzeePulse {
+  animation: yahtzeePulse 0.6s ease;
 }
