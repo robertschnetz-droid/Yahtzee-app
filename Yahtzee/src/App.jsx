@@ -96,6 +96,7 @@ function App() {
     const data = localStorage.getItem("scoresOnder");
     return data ? JSON.parse(data) : onder.map(() => spellen.map(() => ""));
   });
+  const [pulseCel, setPulseCel] = useState("");
 
   const [naam, setNaam] = useState(() => localStorage.getItem("naam") || "");
 
@@ -504,7 +505,10 @@ function App() {
                   <td style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>{cat.naam}</td>
 
                   {spellen.map((_, k) => (
-                    <td key={k}>
+                    <td
+  key={k}
+  className={pulseCel === `${i}-${k}` ? "yahtzeePulse" : ""}
+>
                       {cat.automatisch ? (
                         <span
                           style={{
@@ -519,6 +523,7 @@ function App() {
                         </span>
                       ) : (
                         <select
+className="scoreSelect"
                           style={ingevuldStyle(scoresOnder[i][k] !== "", rijIsVol)}
                           disabled={false}
                           value={scoresOnder[i][k]}
@@ -533,6 +538,8 @@ function App() {
                             }
 
                             setOnder(i, k, e.target.value);
+                            setPulseCel(`${i}-${k}`);
+setTimeout(() => setPulseCel(""), 600);
                             e.target.blur();
                           }}
                         >
