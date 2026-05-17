@@ -192,10 +192,9 @@
 }
 
 .startLogo {
-  width: 180px;
-max-width: 80%;
-height: auto;
-  margin-top: 20px;
+  width: 120px !important;
+  height: auto !important;
+  display: block;
 }
 
 .startScherm {
