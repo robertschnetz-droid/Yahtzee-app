@@ -86,7 +86,6 @@ function App() {
     false,
     false,
   ]);
-  const [animatie, setAnimatie] = useState(null);
 
   const [scoresBoven, setScoresBoven] = useState(() => {
     const data = localStorage.getItem("scoresBoven");
@@ -501,16 +500,7 @@ function App() {
               const rijIsVol = rijVol(scoresOnder[i]);
 
               return (
-                <tr
-  key={cat.naam}
-  className={
-  animatie === `yahtzee-${i}`
-    ? "yahtzee-row-animation"
-    : scoresOnder[i].every((v) => v !== "")
-    ? "rij-klaar"
-    : ""
-}
->
+                <tr key={cat.naam}>
                   <td style={{ opacity: rijIsVol ? RIJ_FADE : 1 }}>{cat.naam}</td>
 
                   {spellen.map((_, k) => (
@@ -529,7 +519,7 @@ function App() {
                         </span>
                       ) : (
                         <select
-                            style={ingevuldStyle(scoresOnder[i][k] !== "", rijIsVol)}
+                          style={ingevuldStyle(scoresOnder[i][k] !== "", rijIsVol)}
                           disabled={scoresOnder[i][k] !== ""}
                           value={scoresOnder[i][k]}
                           onChange={(e) => {
@@ -540,14 +530,6 @@ function App() {
                             }
 
                             setOnder(i, k, e.target.value);
-
-if (cat.naam === "Yahtzee" && e.target.value === "50") {
-  setAnimatie(`yahtzee-${i}`);
-
-  setTimeout(() => {
-    setAnimatie(null);
-  }, 800);
-}
                             e.target.blur();
                           }}
                         >
