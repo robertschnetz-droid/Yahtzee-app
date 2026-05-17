@@ -967,7 +967,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
       {bevestiging && (
         <div className="modalBackdrop">
           <div className="modalBox">
-            <h2 style={{ color: "white" }}>{bevestiging.titel}</h2>
+            <h2 style={{ color: "#e5e7eb" }}>{bevestiging.titel}</h2>
             <p>{bevestiging.tekst}</p>
             <div className="modalActions">
               <button
