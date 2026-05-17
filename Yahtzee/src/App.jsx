@@ -520,9 +520,12 @@ function App() {
                       ) : (
                         <select
                           style={ingevuldStyle(scoresOnder[i][k] !== "", rijIsVol)}
-                          disabled={scoresOnder[i][k] !== ""}
+                          disabled={false}
                           value={scoresOnder[i][k]}
                           onChange={(e) => {
+                            if (scoresOnder[i][k] !== "") {
+  return;
+}
                             if (!window.confirm("Weet je het zeker?")) return;
                             if (e.target.value === "cancel") {
                               e.target.blur();
