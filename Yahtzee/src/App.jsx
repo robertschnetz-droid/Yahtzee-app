@@ -570,6 +570,9 @@ function App() {
           </tbody>
         </table>
       </div>
+
+  </div>
+)}
       {openMenu && (
   <div className="scorePopup floatingPopup">
         {["-", "0", "5", "10", "15", "20", "25"].map((waarde) => (
@@ -591,7 +594,4 @@ function App() {
     </button>
   </div>
 )}
-  </div>
-)}
-
 export default App;
