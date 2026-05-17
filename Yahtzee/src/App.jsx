@@ -598,6 +598,12 @@ setTimeout(() => setPulseCel(""), 600);
           </tbody>
         </table>
       </div>
+      {openMenu && (
+  <div className="scorePopup">
+    Menu open: {openMenu}
+    <button onClick={() => setOpenMenu(null)}>Sluiten</button>
+  </div>
+)}
     </div>
   );
 }
