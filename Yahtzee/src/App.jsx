@@ -60,8 +60,11 @@ function clampPopup(left, top) {
 
 function App() {
   const [gestart, setGestart] = useState(
-    sessionStorage.getItem("spelGestart") === "true"
-  );
+  sessionStorage.getItem("spelGestart") === "true"
+);
+
+const [startAnimatie, setStartAnimatie] = useState(false);
+  
 
   const [bonusBehaald, setBonusBehaald] = useState([
     false,
@@ -362,9 +365,12 @@ function App() {
             border: "none",
           }}
           onClick={() => {
-            setGestart(true);
-            sessionStorage.setItem("spelGestart", "true");
-          }}
+  setStartAnimatie(true);
+  setTimeout(() => {
+    setGestart(true);
+    sessionStorage.setItem("spelGestart", "true");
+  }, 2000);
+}}
         >
           Start spel
         </button>
@@ -374,6 +380,11 @@ function App() {
           className="startLogo"
           style={{ width: "200px", marginTop: "20px" }}
         />
+        {startAnimatie && (
+  <div className="diceIntro">
+    🎲 🎲 🎲
+  </div>
+)}
       </div>
     );
   }
