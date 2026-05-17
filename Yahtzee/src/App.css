@@ -253,8 +253,8 @@ select.filled {
 }
 
 .floatingPopup {
-  position: fixed;
-  top: 45%;
+  position: fixed !important;
+  top: 120px !important;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999;
