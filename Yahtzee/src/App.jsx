@@ -382,8 +382,8 @@ const [startAnimatie, setStartAnimatie] = useState(false);
         />
         {startAnimatie && (
   <div className="diceIntro">
-    🎲 🎲 🎲
-  </div>
+  <img src="/2 dice.gif" alt="Rolling Dice" />
+</div>
 )}
       </div>
     );
