@@ -339,8 +339,7 @@ select.filled {
   color: red;
   font-size: 32px;
   pointer-events: none;
-  animation: xFall linear forwards;
-  z-index: 9999;
+    z-index: 9999;
 }
 
 @keyframes xFall {
