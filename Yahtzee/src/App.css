@@ -334,7 +334,7 @@ select.filled {
 .xDrop {
   position: fixed;
   left: 50%;
-  top: -50px;
+  top: 100px;
   display: block;
   color: red;
   font-size: 32px;
