@@ -1013,7 +1013,17 @@ const [startAnimatie, setStartAnimatie] = useState(false);
         <div className={`effectOverlay ${effect.type}`}>
           {effect.type === "sad"
   ? Array.from({ length: 24 }, (_, i) => (
-      <span key={i} className="fallingX">❌</span>
+      <span
+  key={i}
+  className="fallingX"
+  style={{
+    left: `${Math.random() * 100}vw`,
+    animationDelay: `${Math.random() * 1.2}s`,
+    fontSize: `${28 + Math.random() * 22}px`,
+  }}
+>
+  ❌
+</span>
     ))
   : effect.text}
         </div>
