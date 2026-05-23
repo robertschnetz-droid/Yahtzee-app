@@ -336,12 +336,8 @@ select.filled {
   left: 50%;
   top: 100px;
   display: block;
-  color: red;
-  font-size: 32px;
-  pointer-events: none;
-    z-index: 9999;
+  z-index: 10000;
 }
-
 @keyframes xFall {
   from {
     transform: translateY(0);
