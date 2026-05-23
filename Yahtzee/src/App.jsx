@@ -950,10 +950,15 @@ const [startAnimatie, setStartAnimatie] = useState(false);
         <div
           className="scoreMenu"
           style={{
-            left: `${scoreMenu.pos.left}px`,
-            top: `${scoreMenu.pos.top}px`,
-            width: `${scoreMenu.pos.width}px`,
-          }}
+  position: "fixed",
+  left: "50%",
+  bottom: "16px",
+  transform: "translateX(-50%)",
+  width: "min(92vw, 650px)",
+  maxHeight: "55vh",
+  overflowY: "auto",
+  zIndex: 10000,
+}}
         >
           {scoreMenu.opties.map((waarde) => (
             <button key={waarde || "leeg"} type="button" onClick={() => kiesScore(waarde)}>
