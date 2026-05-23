@@ -317,7 +317,7 @@ select.filled {
 }
 
 .fallingX {
-  position: fixed;
+  position: absolute;
   top: -50px;
   font-size: 42px;
   animation: xRain 2.2s linear forwards;
