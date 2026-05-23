@@ -252,7 +252,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
 
     if (bovenCompleet && nieuwTotaal < 63 && !sadPlayed[k]) {
       speelGeluid(sadTrombone);
-      triggerEffect("sad", "❌❌❌❌❌❌❌❌❌");
+      triggerEffect("sad", "Bonus niet gehaald");
       setSadPlayed((prev) => {
         const nieuw = [...prev];
         nieuw[k] = true;
