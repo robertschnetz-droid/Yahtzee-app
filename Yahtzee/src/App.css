@@ -297,6 +297,18 @@ select.filled {
   }
 }
 
+@keyframes xRain {
+  0% {
+    transform: translateY(-120px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(100vh);
+    opacity: 1;
+  }
+}
+
 .scoreMenu {
   display: flex;
   flex-wrap: wrap;
