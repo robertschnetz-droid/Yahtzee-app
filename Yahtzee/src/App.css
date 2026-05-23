@@ -323,3 +323,10 @@ select.filled {
   animation: xRain 2.2s linear forwards;
   pointer-events: none;
 }
+
+.effectOverlay {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
