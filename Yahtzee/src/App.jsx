@@ -1017,10 +1017,13 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   key={i}
   className="fallingX"
   style={{
-    left: `${Math.random() * 100}vw`,
-    animationDelay: `${Math.random() * 1.2}s`,
-    fontSize: `${28 + Math.random() * 22}px`,
-  }}
+  left: `${Math.random() * 100}vw`,
+  top: `${Math.random() * -1000}px`,
+  animationDelay: `${Math.random() * 1.2}s`,
+  animationDuration: `${1.5 + Math.random() * 2.5}s`,
+  fontSize: `${28 + Math.random() * 22}px`,
+  transform: `rotate(${Math.random() * 360}deg)`,
+}}
 >
   ❌
 </span>
