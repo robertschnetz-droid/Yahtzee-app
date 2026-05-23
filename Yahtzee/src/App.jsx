@@ -1011,24 +1011,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
 
       {effect && (
         <div className={`effectOverlay ${effect.type}`}>
-          {effect.type === "sad"
-  ? Array.from({ length: 24 }, (_, i) => (
-      <span
-  key={i}
-  className="fallingX"
-  style={{
-  left: `${Math.random() * 100}100%`,
-  top: `${Math.random() * -1000}px`,
-  animationDelay: `${Math.random() * 1.2}s`,
-  animationDuration: `${1.5 + Math.random() * 2.5}s`,
-  fontSize: `${28 + Math.random() * 22}px`,
-  transform: `rotate(${Math.random() * 360}deg)`,
-}}
->
-  ❌
-</span>
-    ))
-  : effect.text}
+          {effect.text}
         </div>
       )}
     </>
