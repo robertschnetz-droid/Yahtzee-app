@@ -1017,7 +1017,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   key={i}
   className="fallingX"
   style={{
-  left: `${Math.random() * 100}vw`,
+  left: `${Math.random() * 100}100%`,
   top: `${Math.random() * -1000}px`,
   animationDelay: `${Math.random() * 1.2}s`,
   animationDuration: `${1.5 + Math.random() * 2.5}s`,
