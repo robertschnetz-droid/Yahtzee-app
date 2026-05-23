@@ -1018,7 +1018,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
       animationDuration: `${2 + Math.random() * 3}s`,
     }}
   >
-    ❌
+    XXXXXXXXXX
   </span>
 
   <div className={`effectOverlay ${effect.type}`}>
