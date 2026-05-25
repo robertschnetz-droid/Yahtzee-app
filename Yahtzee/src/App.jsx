@@ -1011,15 +1011,19 @@ const [startAnimatie, setStartAnimatie] = useState(false);
 
       {effect && (
   <>
-    <span
-      className="xDrop"
-      style={{
-        left: `${Math.random() * 100}vw`,
-        animationDuration: `${2 + Math.random() * 3}s`,
-      }}
-    >
-      HELLO
-    </span>
+    <div
+  style={{
+    position: "fixed",
+    top: "120px",
+    left: "120px",
+    zIndex: 999999,
+    color: "red",
+    fontSize: "60px",
+    background: "yellow",
+  }}
+>
+  ❌
+</div>
 
     <div className={`effectOverlay ${effect.type}`}>
       {effect.text}
