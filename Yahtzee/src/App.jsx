@@ -681,7 +681,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   background-image: url('/gold-dice.png');
   background-size: contain;
   background-repeat: repeat-x;
-  width: 320px;
+  width: 4000px;
   height: 80px;
   display: block;
   animation: diceBurst 2s ease both;
