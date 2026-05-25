@@ -1009,9 +1009,9 @@ const [startAnimatie, setStartAnimatie] = useState(false);
         </div>
       )}
 
-      {effect?.type === "sad" && (
+      {effect && (
   <>
-    {Array.from({ length: 15 }, (_, i) => (
+    {effect.type === "sad" && Array.from({ length: 15 }, (_, i) => (
   <div
     key={i}
     style={{
