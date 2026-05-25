@@ -154,7 +154,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
 
   function triggerEffect(type, text = "") {
     setEffect({ type, text });
-    setTimeout(() => setEffect(null), 2200);
+    setTimeout(() => setEffect(null), 4500);
   }
 
   function bevestigNieuwSpel() {
