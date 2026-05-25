@@ -675,12 +675,17 @@ const [startAnimatie, setStartAnimatie] = useState(false);
           }
 
           .effectOverlay.yahtzee::after {
-            content: "🎲 🎲 🎲 🎲 🎲";
-            position: absolute;
-            top: 60%;
-            font-size: 64px;
-            animation: diceBurst 2s ease both;
-          }
+  content: "";
+  position: absolute;
+  top: 60%;
+  background-image: url('/gold-dice.png');
+  background-size: contain;
+  background-repeat: repeat-x;
+  width: 320px;
+  height: 80px;
+  display: block;
+  animation: diceBurst 2s ease both;
+}
 
           .effectOverlay.finished {
             color: #ffd166;
