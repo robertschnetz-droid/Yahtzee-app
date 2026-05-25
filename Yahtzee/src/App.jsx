@@ -1012,7 +1012,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
       {effect && (
   <>
     {effect.type === "sad" && Array.from({ length: 15 }, (_, i) => (
-  <div
+        <div
     key={i}
     style={{
       position: "fixed",
@@ -1026,6 +1026,22 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   >
     ❌
   </div>
+))}
+{effect?.type === "bonus" &&
+  Array.from({ length: 25 }, (_, i) => (
+    <div
+      key={`confetti-${i}`}
+      style={{
+        position: "fixed",
+        top: `${Math.random() * 100}vh`,
+        left: `${Math.random() * 100}vw`,
+        zIndex: 999999,
+        fontSize: `${20 + Math.random() * 40}px`,
+        pointerEvents: "none",
+      }}
+    >
+      {["🎉", "🎊", "✨"][Math.floor(Math.random() * 3)]}
+    </div>
 ))}
 
     <div className={`effectOverlay ${effect.type}`}>
