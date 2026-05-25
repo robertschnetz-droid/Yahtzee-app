@@ -679,7 +679,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   position: absolute;
   top: 60%;
   background-image: url('/gold-dice.png');
-  background-size: 90px 90px;
+  background-size: 82px 82px;
   background-repeat: repeat-x;
   width: 500px;
   height: 100px;
