@@ -678,12 +678,12 @@ const [startAnimatie, setStartAnimatie] = useState(false);
             content: "🎲 🎲 🎲 🎲 🎲";
             position: absolute;
             top: 60%;
-            font-size: 42px;
+            font-size: 64px;
             animation: diceBurst 2s ease both;
           }
 
           .effectOverlay.finished {
-            color: #ffffff;
+            color: #ffd166;
             animation: finishedSweep 2.2s ease both;
           }
 
