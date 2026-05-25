@@ -1009,7 +1009,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
         </div>
       )}
 
-      {effect && (
+      {effect?.type === "sad" && (
   <>
     {Array.from({ length: 15 }, (_, i) => (
   <div
