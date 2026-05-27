@@ -682,6 +682,8 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   background-size: 95px 95px;
   background-repeat: repeat-x;
   background-position: center;
+  border-radius: 18px;
+box-shadow: 0 0 30px 12px gold;
   width: 500px;
   height: 100px;
   display: block;
