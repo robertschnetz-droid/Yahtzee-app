@@ -682,8 +682,6 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   background-size: 95px 95px;
   background-repeat: repeat-x;
   background-position: center;
-  border-radius: 18px;
-box-shadow: 0 0 30px 12px gold;
   width: 500px;
   height: 100px;
   display: block;
@@ -779,8 +777,8 @@ box-shadow: 0 0 30px 12px gold;
             25% { opacity: 1; }
             70% {
   opacity: 1;
-  transform: translateY(0) scale(1.25);
-  filter: drop-shadow(0 0 25px gold) brightness(1.5);
+  transform: translateY(0) scale(1.35);
+  filter: brightness(2) contrast(1.25) saturate(1.4);
 }
             100% {
   opacity: 0;
