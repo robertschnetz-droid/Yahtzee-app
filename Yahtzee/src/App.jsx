@@ -778,7 +778,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
             70% {
   opacity: 1;
   transform: translateY(0) scale(1.35);
-  filter: brightness(2) contrast(1.25) saturate(1.4);
+  filter: drop-shadow(0 0 25px gold) brightness(1.5);
 }
             100% {
   opacity: 0;
