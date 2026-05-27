@@ -778,6 +778,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
            70% {
   opacity: 1;
   transform: translateY(0) scale(1.45);
+filter: drop-shadow(0 0 30px gold);
 }
 
 75% {
@@ -788,6 +789,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
 85% {
   opacity: 1;
   transform: translateY(0) scale(1.4);
+filter: drop-shadow(0 0 30px gold);
 }
             100% {
   opacity: 0;
