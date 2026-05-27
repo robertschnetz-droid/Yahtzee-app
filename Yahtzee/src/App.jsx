@@ -685,7 +685,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   width: 500px;
   height: 100px;
   display: block;
-  animation: diceBurst 2s ease both, diceGlow 0.8s ease-in-out;
+  animation: "diceBurst 2s ease both",
 }
 
           .effectOverlay.finished {
