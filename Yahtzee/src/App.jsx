@@ -685,7 +685,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   width: 500px;
   height: 100px;
   display: block;
-  animation: diceBurst 2s ease both;
+  animation: "diceBurst 2s ease both, diceGlow 0.8s ease-in-out",
 }
 
           .effectOverlay.finished {
@@ -778,6 +778,23 @@ const [startAnimatie, setStartAnimatie] = useState(false);
             70% { opacity: 1; transform: translateY(0) scale(1.1); }
             100% { opacity: 0; transform: translateY(-20px) scale(0.9); }
           }
+
+          @keyframes diceGlow {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px gold);
+  }
+
+  50% {
+    transform: scale(1.15);
+    filter: drop-shadow(0 0 18px gold);
+  }
+
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px gold);
+  }
+}
 
           @keyframes finishedSweep {
             0% { opacity: 0; transform: scale(0.85); }
