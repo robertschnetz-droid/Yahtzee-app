@@ -685,7 +685,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   width: 500px;
   height: 100px;
   display: block;
-  animation: "diceBurst 2s ease both",
+  animation: "diceBurst 2s ease both, diceGlow 0.8s ease-in-out",
 }
 
           .effectOverlay.finished {
@@ -803,9 +803,9 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   }
 
   50% {
-    transform: scale(1.15);
-    filter: drop-shadow(0 0 18px gold);
-  }
+  transform: scale(1.35);
+  filter: drop-shadow(0 0 30px gold) brightness(1.6);
+}
 
   100% {
     transform: scale(1);
