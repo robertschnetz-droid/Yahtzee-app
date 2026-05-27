@@ -775,10 +775,19 @@ const [startAnimatie, setStartAnimatie] = useState(false);
           @keyframes diceBurst {
             0% { transform: translateY(40px) scale(0.7); opacity: 0; }
             25% { opacity: 1; }
-            70% {
+           70% {
   opacity: 1;
-  transform: translateY(0) scale(1.35);
-  filter: drop-shadow(0 0 25px gold) brightness(1.5);
+  transform: translateY(0) scale(1.45);
+}
+
+75% {
+  opacity: 0.7;
+  transform: translateY(0) scale(1.25);
+}
+
+85% {
+  opacity: 1;
+  transform: translateY(0) scale(1.4);
 }
             100% {
   opacity: 0;
