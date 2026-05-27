@@ -806,7 +806,11 @@ const [startAnimatie, setStartAnimatie] = useState(false);
 
   50% {
   transform: scale(1.35);
-  filter: drop-shadow(0 0 30px gold) brightness(1.6);
+  filter:
+  drop-shadow(0 0 4px #ffd166)
+  drop-shadow(0 0 8px #ffdf80)
+  drop-shadow(0 0 14px rgba(255, 209, 102, 0.9))
+  brightness(1.15);
 }
 
   100% {
