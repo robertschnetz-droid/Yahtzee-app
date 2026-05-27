@@ -775,8 +775,16 @@ const [startAnimatie, setStartAnimatie] = useState(false);
           @keyframes diceBurst {
             0% { transform: translateY(40px) scale(0.7); opacity: 0; }
             25% { opacity: 1; }
-            70% { opacity: 1; transform: translateY(0) scale(1.1); }
-            100% { opacity: 0; transform: translateY(-20px) scale(0.9); }
+            70% {
+  opacity: 1;
+  transform: translateY(0) scale(1.25);
+  filter: drop-shadow(0 0 25px gold) brightness(1.5);
+}
+            100% {
+  opacity: 0;
+  transform: translateY(-20px) scale(1);
+  filter: drop-shadow(0 0 0px gold);
+}
           }
 
           @keyframes diceGlow {
@@ -794,7 +802,6 @@ const [startAnimatie, setStartAnimatie] = useState(false);
     transform: scale(1);
     filter: drop-shadow(0 0 0px gold);
   }
-}
 
           @keyframes finishedSweep {
             0% { opacity: 0; transform: scale(0.85); }
