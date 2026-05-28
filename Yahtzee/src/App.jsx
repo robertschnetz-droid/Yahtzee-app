@@ -169,7 +169,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
 
   function triggerEffect(type, text = "") {
     setEffect({ type, text });
-    setTimeout(() => setEffect(null), 4500);
+    setTimeout(() => setEffect(null), 3500);
   }
 
   function bevestigNieuwSpel() {
@@ -831,8 +831,8 @@ const [startAnimatie, setStartAnimatie] = useState(false);
 }
 
 .goldDice {
-  width: 78px;
-  height: 78px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
 
   filter:
