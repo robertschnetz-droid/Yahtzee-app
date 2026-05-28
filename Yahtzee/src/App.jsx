@@ -689,22 +689,6 @@ const [startAnimatie, setStartAnimatie] = useState(false);
             animation: yahtzeeOverlay 2.2s ease both;
           }
 
-          .effectOverlay.yahtzee::after {
-  content: "";
-  position: absolute;
-  top: 60%;
-  background-image: url('/gold-dice.png');
-  background-size: 95px 95px;
-  background-repeat: repeat-x;
-  background-position: center;
-  box-shadow: 0 0 45px 18px rgba(255, 209, 102, 0.75);
-  border-radius: 24px;
-  width: 500px;
-  height: 100px;
-  display: block;
-  animation: "diceBurst 2s ease both, diceGlow 0.8s ease-in-out",
-}
-
           .effectOverlay.finished {
             color: #ffd166;
             animation: finishedSweep 2.2s ease both;
