@@ -60,14 +60,35 @@ function clampPopup(left, top) {
 
 function GoldenYahtzeeDice() {
   return (
-    <div className="goldDiceRow">
+    <div className="goldDiceRow" aria-hidden="true">
       {[1, 2, 3, 4, 5].map((dice, index) => (
         <img
           key={index}
           src="/gold-dice.png"
-          alt="Golden dice"
+          alt=""
           className="goldDice"
+          style={{ animationDelay: `${index * 0.08}s` }}
         />
+      ))}
+    </div>
+  );
+}
+
+function FireworkShow() {
+  return (
+    <div className="fireworkShow" aria-hidden="true">
+      {Array.from({ length: 18 }, (_, i) => (
+        <span
+          key={i}
+          className="fireworkSpark"
+          style={{
+            left: `${8 + Math.random() * 84}%`,
+            top: `${10 + Math.random() * 62}%`,
+            animationDelay: `${Math.random() * 1.2}s`,
+          }}
+        >
+          {['✦', '✧', '★', '✺'][Math.floor(Math.random() * 4)]}
+        </span>
       ))}
     </div>
   );
@@ -650,6 +671,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
             inset: 0;
             z-index: 10001;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             pointer-events: none;
@@ -685,13 +707,37 @@ const [startAnimatie, setStartAnimatie] = useState(false);
           }
 
           .effectOverlay.yahtzee {
-  color: #ffd166;
-  animation: yahtzeeOverlay 2.2s ease both;
-}
+            color: #ffd166;
+            animation: yahtzeeOverlay 2.7s ease both;
+          }
 
           .effectOverlay.finished {
             color: #ffd166;
-            animation: finishedSweep 2.2s ease both;
+            animation: finishedOverlay 3.4s ease both;
+          }
+
+          .finishSweepActive {
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 34px rgba(255,209,102,0.25);
+          }
+
+          .finishSweepActive::after {
+            content: "";
+            position: absolute;
+            inset: -35%;
+            pointer-events: none;
+            background: linear-gradient(135deg,
+              transparent 36%,
+              rgba(255,209,102,0.0) 42%,
+              rgba(255,209,102,0.55) 49%,
+              rgba(255,255,255,0.85) 50%,
+              rgba(255,209,102,0.55) 51%,
+              rgba(255,209,102,0.0) 58%,
+              transparent 64%
+            );
+            animation: scoreCardSweep 3.2s ease both;
+            z-index: 4;
           }
 
           @keyframes softFloat {
@@ -767,94 +813,103 @@ const [startAnimatie, setStartAnimatie] = useState(false);
           }
 
           @keyframes yahtzeeOverlay {
-            0% { opacity: 0; transform: scale(0.7); }
-            20% { opacity: 1; transform: scale(1.1); }
-            75% { opacity: 1; }
-            100% { opacity: 0; transform: scale(1); }
+            0% { opacity: 0; transform: scale(0.72); }
+            18% { opacity: 1; transform: scale(1.06); }
+            72% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.96); }
           }
 
-          @keyframes diceBurst {
-            0% { transform: translateY(40px) scale(0.7); opacity: 0; }
-            25% { opacity: 1; }
-           70% {
-  opacity: 1;
-  transform: translateY(0) scale(1.45);
-}
+          @keyframes finishedOverlay {
+            0% { opacity: 0; transform: scale(0.84); letter-spacing: 0; }
+            18% { opacity: 1; transform: scale(1.08); letter-spacing: 1px; }
+            78% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.04); }
+          }
 
-75% {
-  opacity: 0.7;
-  transform: translateY(0) scale(1.25);
-}
+          @keyframes scoreCardSweep {
+            0% { transform: translate(-70%, -70%); opacity: 0; }
+            18% { opacity: 1; }
+            82% { opacity: 1; }
+            100% { transform: translate(70%, 70%); opacity: 0; }
+          }
 
-85% {
-  opacity: 1;
-  transform: translateY(0) scale(1.4);
-}
+          .goldDiceRow {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: clamp(6px, 2vw, 14px);
+            margin-top: 18px;
+            padding: 10px 14px;
+            border-radius: 22px;
+            background: radial-gradient(circle, rgba(255,209,102,0.18), rgba(255,209,102,0.04) 62%, transparent 72%);
+          }
+
+          .goldDice {
+            width: clamp(42px, 12vw, 78px);
+            height: clamp(42px, 12vw, 78px);
+            object-fit: contain;
+            animation: goldDicePop 2.4s ease both;
+            filter: drop-shadow(0 0 4px rgba(255,209,102,0.75));
+          }
+
+          @keyframes goldDicePop {
+            0% {
+              opacity: 0;
+              transform: translateY(18px) scale(0.72) rotate(-8deg);
+              filter: drop-shadow(0 0 0 rgba(255,209,102,0));
+            }
+            22% {
+              opacity: 1;
+              transform: translateY(0) scale(1.12) rotate(3deg);
+              filter:
+                drop-shadow(0 0 5px #ffd166)
+                drop-shadow(0 0 14px rgba(255,209,102,0.9))
+                brightness(1.15);
+            }
+            45% {
+              transform: translateY(0) scale(1) rotate(0deg);
+              filter: drop-shadow(0 0 6px rgba(255,209,102,0.7));
+            }
+            62% {
+              transform: translateY(0) scale(1.18);
+              filter:
+                drop-shadow(0 0 6px #ffd166)
+                drop-shadow(0 0 18px rgba(255,209,102,0.95))
+                brightness(1.2);
+            }
+            82% {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
             100% {
-  opacity: 0;
-  transform: translateY(-20px) scale(1);
-  filter: drop-shadow(0 0 0px gold);
-}
+              opacity: 0;
+              transform: translateY(-14px) scale(0.96);
+              filter: drop-shadow(0 0 0 rgba(255,209,102,0));
+            }
           }
 
-          @keyframes diceGlow {
-  0% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 0px gold);
-  }
-
-  50% {
-  transform: scale(1.35);
-  filter:
-  drop-shadow(0 0 4px #ffd166)
-  drop-shadow(0 0 8px #ffdf80)
-  drop-shadow(0 0 14px rgba(255, 209, 102, 0.9))
-  brightness(1.15);
-}
-
-  100% {
-    transform: scale(1);
-    filter: drop-shadow(0 0 0px gold);
-  }
-
-          @keyframes finishedSweep {
-            0% { opacity: 0; transform: scale(0.85); }
-            20% { opacity: 1; transform: scale(1); }
-            80% { opacity: 1; }
-            100% { opacity: 0; transform: scale(1.05); }
+          .fireworkShow {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            pointer-events: none;
+            overflow: hidden;
           }
-         .goldDiceRow {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 18px;
-}
 
-.goldDice {
-  width: 42px;
-  height: 42px;
-  object-fit: contain;
+          .fireworkSpark {
+            position: absolute;
+            color: #ffd166;
+            font-size: clamp(18px, 5vw, 42px);
+            text-shadow: 0 0 12px rgba(255,209,102,0.95);
+            animation: fireworkPop 1.7s ease both;
+          }
 
-  filter:
-    drop-shadow(0 0 6px #ffd166)
-    drop-shadow(0 0 18px rgba(255, 209, 102, 0.95));
-
-  animation: dicePulse 1.4s ease-in-out infinite;
-}
-
-@keyframes dicePulse {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.16);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}   
+          @keyframes fireworkPop {
+            0% { opacity: 0; transform: scale(0.2) rotate(0deg); }
+            28% { opacity: 1; transform: scale(1.45) rotate(18deg); }
+            68% { opacity: 1; transform: scale(0.95) rotate(-10deg); }
+            100% { opacity: 0; transform: scale(0.35) translateY(28px); }
+          }
         `}</style>
 
         <div className="topbar">
@@ -871,7 +926,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
           />
         </div>
 
-        <div className="tableWrap">
+        <div className={`tableWrap ${effect?.type === "finished" ? "finishSweepActive" : ""}`}>
           <table>
             <thead>
               <tr>
@@ -1119,6 +1174,8 @@ const [startAnimatie, setStartAnimatie] = useState(false);
       {["🎉", "🎊", "✨"][Math.floor(Math.random() * 3)]}
     </div>
 ))}
+
+    {effect.type === "finished" && <FireworkShow />}
 
     <div className={`effectOverlay ${effect.type}`}>
   <div>{effect.text}</div>
