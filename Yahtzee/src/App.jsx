@@ -338,12 +338,13 @@ const [startAnimatie, setStartAnimatie] = useState(false);
     if (!scoreMenu) return;
 
     if (waarde === "cancel") {
-      setScoreMenu(null);
+      setScoreMenu(null);      
       return;
     }
 
     const actie = { ...scoreMenu, waarde };
     setScoreMenu(null);
+    document.activeElement.blur();
     setBevestiging({
       titel: "Weet je het zeker?",
       tekst: `${actie.label}: ${waarde === "" ? "-" : waarde}`,
