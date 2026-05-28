@@ -58,6 +58,21 @@ function clampPopup(left, top) {
   return { left: x, top: y, width };
 }
 
+function GoldenYahtzeeDice() {
+  return (
+    <div className="goldDiceRow">
+      {[1, 2, 3, 4, 5].map((dice, index) => (
+        <img
+          key={index}
+          src="/gold-dice.png"
+          alt="Golden dice"
+          className="goldDice"
+        />
+      ))}
+    </div>
+  );
+}
+
 function App() {
   const [gestart, setGestart] = useState(
   sessionStorage.getItem("spelGestart") === "true"
@@ -824,6 +839,38 @@ const [startAnimatie, setStartAnimatie] = useState(false);
             80% { opacity: 1; }
             100% { opacity: 0; transform: scale(1.05); }
           }
+         .goldDiceRow {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.goldDice {
+  width: 78px;
+  height: 78px;
+  object-fit: contain;
+
+  filter:
+    drop-shadow(0 0 6px #ffd166)
+    drop-shadow(0 0 18px rgba(255, 209, 102, 0.95));
+
+  animation: dicePulse 1.4s ease-in-out infinite;
+}
+
+@keyframes dicePulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.16);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}   
         `}</style>
 
         <div className="topbar">
@@ -1090,8 +1137,12 @@ const [startAnimatie, setStartAnimatie] = useState(false);
 ))}
 
     <div className={`effectOverlay ${effect.type}`}>
-      {effect.text}
-    </div>
+  <div>{effect.text}</div>
+
+  {effect.type === "yahtzee" && (
+    <GoldenYahtzeeDice />
+  )}
+</div>
   </>
 )}
     </>
