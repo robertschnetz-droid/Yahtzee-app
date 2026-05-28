@@ -685,9 +685,8 @@ const [startAnimatie, setStartAnimatie] = useState(false);
           }
 
           .effectOverlay.yahtzee {
-            color: #ffd166;
-            animation: yahtzeeOverlay 2.2s ease both;
-          }
+           display: none;
+}
 
           .effectOverlay.finished {
             color: #ffd166;
