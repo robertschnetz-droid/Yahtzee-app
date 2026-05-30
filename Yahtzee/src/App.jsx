@@ -960,7 +960,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
                               openScoreMenu(e, "boven", i, k, optiesBoven(i), cat)
                             }
                           >
-                            {isIngevuld ? scoresBoven[i][k] : "-"}
+                            {isIngevuld ? scoresBoven[i][k] : ""}
                           </button>
                         </td>
                       );
@@ -1038,7 +1038,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
                                 openScoreMenu(e, "onder", i, k, optiesOnder(cat), cat.naam)
                               }
                             >
-                              {isIngevuld ? scoresOnder[i][k] : "-"}
+                              {isIngevuld ? scoresOnder[i][k] : ""}
                             </button>
                           )}
                         </td>
