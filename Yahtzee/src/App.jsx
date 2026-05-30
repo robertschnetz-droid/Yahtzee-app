@@ -686,22 +686,6 @@ function optiesOnder(cat) {
             animation: confettiFade 2.2s ease both;
           }
 
-          .effectOverlay.bonus::before,
-          .effectOverlay.bonus::after {
-            content: "🎉 🎊 ✨ 🎉 🎊";
-            position: absolute;
-            top: 15%;
-            left: 0;
-            right: 0;
-            font-size: 34px;
-            animation: confettiFall 2.1s ease both;
-          }
-
-          .effectOverlay.bonus::after {
-            top: 35%;
-            animation-delay: 0.25s;
-          }
-
           .effectOverlay.sad {
             color: #ff6262;
             animation: dramaIn 2.2s ease both;
@@ -1158,6 +1142,22 @@ function optiesOnder(cat) {
   >
     ❌
   </div>
+))}
+{effect?.type === "bonus" &&
+  Array.from({ length: 25 }, (_, i) => (
+    <div
+      key={`confetti-${i}`}
+      style={{
+        position: "fixed",
+        top: `${Math.random() * 100}vh`,
+        left: `${Math.random() * 100}vw`,
+        zIndex: 999999,
+        fontSize: `${20 + Math.random() * 40}px`,
+        pointerEvents: "none",
+      }}
+    >
+      {["🎉", "🎊", "✨"][Math.floor(Math.random() * 3)]}
+    </div>
 ))}
 
     {effect.type === "finished" && <FireworkShow />}
