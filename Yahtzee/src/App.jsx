@@ -360,8 +360,10 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   return ["0", ...Array.from({ length: 5 }, (_, n) => String((n + 1) * (r + 1)))];
 }
 
+function optiesOnder(cat) {
   if (cat.vast) return ["0", String(cat.vast)];
-return ["0", ...Array.from({ length: 32 }, (_, n) => String(n + 5))];
+  return ["0", ...Array.from({ length: 32 }, (_, n) => String(n + 5))];
+}
 
   function scoreButtonClass(isIngevuld, animKey) {
     const classes = ["scoreButton"];
