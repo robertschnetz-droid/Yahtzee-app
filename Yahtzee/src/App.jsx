@@ -1127,7 +1127,7 @@ function optiesOnder(cat) {
 
       {effect && (
   <>
-    {effect.type === "sad" && Array.from({ length: 15 }, (_, i) => (
+    {effect.type === "sad" && Array.from({ length: 40 }, (_, i) => (
         <div
     key={i}
     style={{
@@ -1144,7 +1144,7 @@ function optiesOnder(cat) {
   </div>
 ))}
 {effect?.type === "bonus" &&
-  Array.from({ length: 25 }, (_, i) => (
+  Array.from({ length: 40 }, (_, i) => (
     <div
       key={`confetti-${i}`}
       style={{
