@@ -683,8 +683,9 @@ function optiesOnder(cat) {
           }
 
           .effectOverlay.bonus {
-            animation: confettiFade 2.2s ease both;
-          }
+  color: #ffd700;
+  animation: confettiFade 2.2s ease both;
+}
 
           .effectOverlay.sad {
             color: #ff6262;
