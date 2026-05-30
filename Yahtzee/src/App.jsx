@@ -1027,7 +1027,7 @@ function optiesOnder(cat) {
                                 color: isIngevuld ? "lightgreen" : "white",
                               }}
                             >
-                              {isIngevuld ? scoresOnder[i][k] : "-"}
+                              {isIngevuld ? scoresOnder[i][k] : ""}
                             </span>
                           ) : (
                             <button
@@ -1094,7 +1094,7 @@ function optiesOnder(cat) {
         >
           {scoreMenu.opties.map((waarde) => (
             <button key={waarde || "leeg"} type="button" onClick={() => kiesScore(waarde)}>
-              {waarde === "" ? "-" : waarde}
+              {waarde}
             </button>
           ))}
           <button type="button" onClick={() => kiesScore("cancel")}>Sluiten</button>
