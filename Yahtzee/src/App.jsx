@@ -1159,22 +1159,6 @@ function optiesOnder(cat) {
     ❌
   </div>
 ))}
-{effect?.type === "bonus" &&
-  Array.from({ length: 25 }, (_, i) => (
-    <div
-      key={`confetti-${i}`}
-      style={{
-        position: "fixed",
-        top: `${Math.random() * 100}vh`,
-        left: `${Math.random() * 100}vw`,
-        zIndex: 999999,
-        fontSize: `${20 + Math.random() * 40}px`,
-        pointerEvents: "none",
-      }}
-    >
-      {["🎉", "🎊", "✨"][Math.floor(Math.random() * 3)]}
-    </div>
-))}
 
     {effect.type === "finished" && <FireworkShow />}
 
