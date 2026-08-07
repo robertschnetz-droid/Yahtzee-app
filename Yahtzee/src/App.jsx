@@ -499,7 +499,7 @@ function optiesOnder(cat) {
 
           .adminKey {
           position: absolute;
-          right: 0;
+          right: 40px;
           top: 0;
           background: transparent !important;
           border: 1px solid #5c6575;
