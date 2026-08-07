@@ -670,10 +670,11 @@ function optiesOnder(cat) {
           }
 
           .modalActions {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-          }
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+          margin-top: 18px;
+      }
 
           .cancelButton {
             background: #374151;
