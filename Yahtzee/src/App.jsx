@@ -490,11 +490,21 @@ function optiesOnder(cat) {
           .diceIntro span:nth-child(5) { animation-delay: 0.32s; }
 
           .topbar {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 14px;
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          margin-bottom: 14px;
+          position: relative;
           }
+
+          .adminKey {
+          position: absolute;
+          right: 0;
+          top: 0;
+          background: transparent !important;
+          border: 1px solid #5c6575;
+          padding: 7px 10px;
+        }
 
           button {
             background: #168a5a;
