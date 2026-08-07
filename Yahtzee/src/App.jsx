@@ -1137,8 +1137,8 @@ function optiesOnder(cat) {
       )}
 
       {adminOpen && (
-  <div className="popup-overlay">
-    <div className="popup">
+  <div className="modalBackdrop">
+  <div className="modalBox">
       <h3>Beheerdersfunctie</h3>
       <p>Voer de 6-cijferige beheerderscode in</p>
 
@@ -1153,7 +1153,7 @@ function optiesOnder(cat) {
         autoFocus
       />
 
-      <div className="popup-buttons">
+      <div className="modalActions">
         <button onClick={() => setAdminOpen(false)}>
           Annuleren
         </button>
