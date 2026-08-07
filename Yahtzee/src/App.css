@@ -359,3 +359,6 @@ select.filled {
   padding: 8px 10px;
   cursor: pointer;
 }
+.topbar {
+  position: relative;
+}
