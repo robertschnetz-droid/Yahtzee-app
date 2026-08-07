@@ -141,6 +141,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   const [startDice, setStartDice] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
   const [adminCode, setAdminCode] = useState("");
+  const ADMIN_CODE = "210874";
 
   useEffect(() => {
     localStorage.setItem("scoresBoven", JSON.stringify(scoresBoven));
@@ -1158,9 +1159,19 @@ function optiesOnder(cat) {
         <button onClick={() => setAdminOpen(false)}>
           Annuleren
         </button>
-        <button>
-          Ontgrendelen
-        </button>
+        <button
+  onClick={() => {
+    if (adminCode === ADMIN_CODE) {
+      setAdminOpen(false);
+      setAdminCode("");
+    } else {
+      alert("Onjuiste beheerderscode");
+      setAdminCode("");
+    }
+  }}
+>
+  Ontgrendelen
+</button>
       </div>
     </div>
   </div>
