@@ -142,6 +142,7 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   const [adminOpen, setAdminOpen] = useState(false);
   const [adminCode, setAdminCode] = useState("");
   const ADMIN_CODE = "210874";
+  const [adminMode, setAdminMode] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("scoresBoven", JSON.stringify(scoresBoven));
@@ -240,6 +241,15 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   }
 
   function setBoven(r, k, v) {
+    if (adminMode && scoresBoven[r][k] !== "") {
+  setScoresBoven(prev => {
+    const nieuw = prev.map(rij => [...rij]);
+    nieuw[r][k] = "";
+    return nieuw;
+  });
+  setAdminMode(false);
+  return;
+}
     const waarde = v === "" ? "" : Number(v);
 
     if (waarde !== "" && isYahtzeeScoreBoven(r, waarde) && yahtzeeVakOpen(k)) {
@@ -301,6 +311,15 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   }
 
   function setOnder(r, k, v) {
+    if (adminMode && scoresOnder[r][k] !== "") {
+  setScoresOnder(prev => {
+    const nieuw = prev.map(rij => [...rij]);
+    nieuw[r][k] = "";
+    return nieuw;
+  });
+  setAdminMode(false);
+  return;
+}
     const waarde = v === "" ? "" : Number(v);
 
     const onderKopie = scoresOnder.map((x) => [...x]);
@@ -964,7 +983,7 @@ function optiesOnder(cat) {
                           <button
                             type="button"
                             className={scoreButtonClass(isIngevuld, animKey)}
-                            disabled={isIngevuld}
+                            disabled={isIngevuld && !adminMode}
                             onClick={(e) =>
                               openScoreMenu(e, "boven", i, k, optiesBoven(i), cat)
                             }
@@ -1042,7 +1061,7 @@ function optiesOnder(cat) {
                             <button
                               type="button"
                               className={scoreButtonClass(isIngevuld, animKey)}
-                              disabled={isIngevuld}
+                              disabled={isIngevuld && !adminMode}
                               onClick={(e) =>
                                 openScoreMenu(e, "onder", i, k, optiesOnder(cat), cat.naam)
                               }
@@ -1162,6 +1181,7 @@ function optiesOnder(cat) {
         <button
   onClick={() => {
     if (adminCode === ADMIN_CODE) {
+      setAdminMode(true);
       setAdminOpen(false);
       setAdminCode("");
     } else {
