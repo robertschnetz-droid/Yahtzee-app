@@ -899,8 +899,9 @@ function optiesOnder(cat) {
         `}</style>
 
         <div className="topbar">
-          <button onClick={bevestigNieuwSpel}>Nieuw spel</button>
-          <input
+        <button onClick={bevestigNieuwSpel}>Nieuw spel</button>
+        <button className="adminKey">🔑</button>
+        <input
             className="nameInput"
             value={naam}
             onChange={(e) => setNaam(e.target.value)}
