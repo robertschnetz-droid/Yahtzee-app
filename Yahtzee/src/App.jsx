@@ -1167,6 +1167,10 @@ function optiesOnder(cat) {
         </div>
       )}
 
+      <div className="appFooter">
+  <div>Versie 1.0</div>
+  <div>Ontwikkeld door Robert Schnetz</div>
+</div>
       {adminOpen && (
   <div className="modalBackdrop">
   <div className="modalBox">
