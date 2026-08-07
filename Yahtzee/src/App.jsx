@@ -139,6 +139,8 @@ const [startAnimatie, setStartAnimatie] = useState(false);
   const [rowAnim, setRowAnim] = useState(null);
   const [effect, setEffect] = useState(null);
   const [startDice, setStartDice] = useState(false);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [adminCode, setAdminCode] = useState("");
 
   useEffect(() => {
     localStorage.setItem("scoresBoven", JSON.stringify(scoresBoven));
@@ -910,7 +912,16 @@ function optiesOnder(cat) {
 
         <div className="topbar">
         <button onClick={bevestigNieuwSpel}>Nieuw spel</button>
-        <button className="adminKey">🔑</button>
+        <button
+  className="adminKey"
+  type="button"
+  onClick={() => {
+    setAdminCode("");
+    setAdminOpen(true);
+  }}
+>
+  🔑
+</button>
         <input
             className="nameInput"
             value={naam}
@@ -1125,6 +1136,34 @@ function optiesOnder(cat) {
         </div>
       )}
 
+      {adminOpen && (
+  <div className="popup-overlay">
+    <div className="popup">
+      <h3>Beheerdersfunctie</h3>
+      <p>Voer de 6-cijferige beheerderscode in</p>
+
+      <input
+        type="password"
+        inputMode="numeric"
+        maxLength={6}
+        value={adminCode}
+        onChange={(e) =>
+          setAdminCode(e.target.value.replace(/\D/g, "").slice(0, 6))
+        }
+        autoFocus
+      />
+
+      <div className="popup-buttons">
+        <button onClick={() => setAdminOpen(false)}>
+          Annuleren
+        </button>
+        <button>
+          Ontgrendelen
+        </button>
+      </div>
+    </div>
+  </div>
+)}
       {melding && (
         <div className="modalBackdrop">
           <div className="modalBox">
