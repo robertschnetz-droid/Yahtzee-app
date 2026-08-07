@@ -349,3 +349,13 @@ select.filled {
     opacity: 0;
   }
 }
+.adminKey {
+  position: absolute;
+  right: 40px;
+  top: 20px;
+  background: transparent !important;
+  border: 1px solid #4b5563;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
