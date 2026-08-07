@@ -984,9 +984,14 @@ function optiesOnder(cat) {
                             type="button"
                             className={scoreButtonClass(isIngevuld, animKey)}
                             disabled={isIngevuld && !adminMode}
-                            onClick={(e) =>
-                              openScoreMenu(e, "boven", i, k, optiesBoven(i), cat)
-                            }
+                            onClick={(e) => {
+  if (adminMode && isIngevuld) {
+    setBoven(i, k, "");
+    return;
+  }
+
+  openScoreMenu(e, "boven", i, k, optiesBoven(i), cat);
+}}
                           >
                             {isIngevuld ? scoresBoven[i][k] : ""}
                           </button>
@@ -1062,9 +1067,14 @@ function optiesOnder(cat) {
                               type="button"
                               className={scoreButtonClass(isIngevuld, animKey)}
                               disabled={isIngevuld && !adminMode}
-                              onClick={(e) =>
-                                openScoreMenu(e, "onder", i, k, optiesOnder(cat), cat.naam)
-                              }
+                              onClick={(e) => {
+  if (adminMode && isIngevuld) {
+    setOnder(i, k, "");
+    return;
+  }
+
+  openScoreMenu(e, "onder", i, k, optiesOnder(i), cat);
+}}
                             >
                               {isIngevuld ? scoresOnder[i][k] : ""}
                             </button>
